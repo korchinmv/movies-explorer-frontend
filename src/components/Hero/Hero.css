@@ -1,0 +1,38 @@
+.hero {
+  background-color: #073042;
+  background-image: url("../../images/hero/hero-logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 320px;
+  display: flex;
+  align-items: center;
+  height: 600px;
+}
+
+.hero__title {
+  text-align: center;
+  font-size: 50px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  max-width: 730px;
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    height: 860px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero {
+    background-size: 248px;
+    height: 645px;
+  }
+
+  .hero__title {
+    font-size: 31px;
+  }
+}
