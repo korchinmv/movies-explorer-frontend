@@ -6,11 +6,13 @@ export const Header = () => {
     <header className='header'>
       <div className='container'>
         <div className='header__box'>
-          <img
-            className='header__logo'
-            src={logo}
-            alt='Логотип Movies-Explorer'
-          />
+          <a className='header__logo' href='/'>
+            <img
+              className='header__img'
+              src={logo}
+              alt='Логотип Movies-Explorer'
+            />
+          </a>
 
           <div className='header__links'>
             {/* <Link className='header__link' to='/'></Link>

@@ -2,6 +2,13 @@
 @import url(./vendor/global.css);
 @import url(./vendor/fonts/font.css);
 
+@import url(./components/elements/TitleBlock/TitleBlock.css);
+@import url(./components/elements/Search/Search.css);
+
 @import url(./components/Header/Header.css);
 @import url(./components/Hero/Hero.css);
 @import url(./components/Navigation/Navigation.css);
+@import url(./components/Main/Main.css);
+@import url(./components/Project/Project.css);
+
+@import url(./components/Footer/Footer.css);

@@ -1,0 +1,48 @@
+.footer {
+  font-size: 13px;
+}
+
+.footer__name {
+  padding: 79px 0 20px;
+  color: #8b8b8b;
+
+  text-align: center;
+  border-bottom: 1px solid #424242;
+}
+
+.footer__bot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.footer__link:not(:last-child) {
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 480px) {
+  .footer {
+    font-size: 12px;
+  }
+
+  .footer__bot {
+    padding-top: 30px;
+    flex-direction: column-reverse;
+  }
+
+  .footer__year {
+    color: #8b8b8b;
+  }
+
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .footer__link:not(:last-child) {
+    margin: 0 0 12px 0;
+  }
+}
