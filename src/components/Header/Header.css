@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.header__logo {
+  margin-right: 20px;
+}
+
 .header__box {
   display: flex;
   justify-content: space-between;
