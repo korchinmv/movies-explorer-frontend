@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { HeaderAuth } from "../HeaderAuth/HeaderAuth";
+import { HeaderNav } from "../HeaderNav/HeaderNav";
+import { MobileMenu } from "../MobileMenu/MobileMenu";
+import { useState } from "react";
 
-export const Header = () => {
+export const Header = ({ isLoggedIn }) => {
+  const [menuActive, setMenuActive] = useState(false);
   return (
     <header className='header'>
       <div className='container'>
-        <div className='header__box'>
-          <a className='header__logo' href='/'>
+        <nav className='header__nav'>
+          <a className='header__logo hover-link' href='/'>
             <img
               className='header__img'
               src={logo}
@@ -14,20 +18,11 @@ export const Header = () => {
             />
           </a>
 
-          <div className='header__links'>
-            {/* <Link className='header__link' to='/'></Link>
-          <Link className='header__link' to='/'>
-            Войти
-          </Link> */}
-            <a className='header__link hover-link' href='#'>
-              Регистрация
-            </a>
-            <a className='header__link header__link_button hover-link' href='#'>
-              Войти
-            </a>
-          </div>
-        </div>
+          {!isLoggedIn ? <HeaderAuth /> : <HeaderNav />}
+        </nav>
       </div>
+
+      <MobileMenu active={menuActive} setActive={setMenuActive} />
     </header>
   );
 };
