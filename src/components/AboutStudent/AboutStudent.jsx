@@ -1,5 +1,6 @@
 import { TitleBlock } from "../elements/TitleBlock/TitleBlock";
 import photo from "../../images/student.jpg";
+import arrow from "../../images/arrow-portfolio.svg";
 
 export const AboutStudent = () => {
   return (
@@ -47,6 +48,7 @@ export const AboutStudent = () => {
               target='_blank'
             >
               Статичный сайт
+              <img className='about-student__arrow' src={arrow} alt='Стрелка' />
             </a>
           </li>
           <li className='about-student__item'>
@@ -57,6 +59,7 @@ export const AboutStudent = () => {
               target='_blank'
             >
               Адаптивный сайт
+              <img className='about-student__arrow' src={arrow} alt='Стрелка' />
             </a>
           </li>
           <li className='about-student__item'>
@@ -67,6 +70,7 @@ export const AboutStudent = () => {
               target='_blank'
             >
               Одностраничное приложение
+              <img className='about-student__arrow' src={arrow} alt='Стрелка' />
             </a>
           </li>
         </ul>

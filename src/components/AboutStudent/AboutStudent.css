@@ -61,7 +61,6 @@
 .about-student__item {
   font-size: 30px;
   font-weight: 400;
-  padding-bottom: 19px;
   position: relative;
 }
 
@@ -78,29 +77,18 @@
 
 .about-student__item:not(:last-child) {
   margin-bottom: 20px;
+  padding-bottom: 19px;
 }
 
 .about-student__item-link {
-  position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
-.about-student__item-link::after {
-  content: "";
-  display: block;
-  background-image: url("../../images/arrow-portfolio.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 16px;
-  height: 17px;
-  transform: translateY(-50%);
-  top: 50%;
-  right: 0;
+.about-student__arrow {
+  margin-left: 5px;
 }
 
 @media screen and (max-width: 768px) {
@@ -184,10 +172,15 @@
   }
 
   .about-student__item {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   .about-student__item-link::after {
+    width: 11px;
+    height: 10px;
+  }
+
+  .about-student__arrow {
     width: 11px;
     height: 10px;
   }
