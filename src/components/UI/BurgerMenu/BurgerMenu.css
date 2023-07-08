@@ -29,7 +29,7 @@
 .burger_active::before {
   background-color: #fff;
   transform: rotate(45deg);
-  top: 21px;
+  top: 20px;
 }
 
 .burger_active::after {

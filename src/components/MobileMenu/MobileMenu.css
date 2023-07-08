@@ -17,6 +17,10 @@
   text-align: center;
 }
 
+.header__menu_active {
+  transform: translateX(0);
+}
+
 .header__menu-item:not(:last-child) {
   margin-bottom: 28px;
 }

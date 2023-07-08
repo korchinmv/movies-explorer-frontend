@@ -17,3 +17,9 @@
 .header__menu-profile {
   flex-grow: 1;
 }
+
+@media screen and (max-width: 768px) {
+  .header__movie-links + .profile-link {
+    display: none;
+  }
+}

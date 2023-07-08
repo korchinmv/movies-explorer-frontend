@@ -5,24 +5,28 @@ import { MobileMenu } from "../MobileMenu/MobileMenu";
 import { useState } from "react";
 
 export const Header = ({ isLoggedIn }) => {
-  const [menuActive, setMenuActive] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <header className='header'>
-      <div className='container'>
-        <nav className='header__nav'>
-          <a className='header__logo hover-link' href='/'>
+    <header className="header">
+      <div className="container">
+        <nav className="header__nav">
+          <a className="header__logo hover-link" href="/">
             <img
-              className='header__img'
+              className="header__img"
               src={logo}
-              alt='Логотип Movies-Explorer'
+              alt="Логотип Movies-Explorer"
             />
           </a>
 
-          {!isLoggedIn ? <HeaderAuth /> : <HeaderNav />}
+          {!isLoggedIn ? (
+            <HeaderAuth />
+          ) : (
+            <HeaderNav isOpen={isOpen} setIsOpen={setIsOpen} />
+          )}
         </nav>
       </div>
 
-      <MobileMenu active={menuActive} setActive={setMenuActive} />
+      <MobileMenu isOpen={isOpen} />
     </header>
   );
 };

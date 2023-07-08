@@ -7,10 +7,10 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <div className='page'>
+    <div className="page">
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={
             <>
               <Header isLoggedIn={isLoggedIn} />
