@@ -43,9 +43,22 @@
   transform: scale(0);
 }
 
+.header__menu-burger {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+
 @media screen and (max-width: 768px) {
   .burger {
     display: block;
-    z-index: 2;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header__menu-burger {
+    position: absolute;
+    right: 13px;
+    top: 13px;
   }
 }

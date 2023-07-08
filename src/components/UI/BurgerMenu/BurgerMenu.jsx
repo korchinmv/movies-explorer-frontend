@@ -1,14 +1,12 @@
-export const BurgerMenu = ({ isOpen, setIsOpen }) => {
+export const BurgerMenu = ({ isOpen, setIsOpen, position }) => {
   return (
-    <>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`burger ${isOpen && "burger_active"}`}
-        type="button"
-        aria-label="Открыть главное меню"
-      >
-        <span className="burger__line"></span>
-      </button>
-    </>
+    <button
+      className={`burger ${isOpen && "burger_active"} ${position}`}
+      onClick={() => setIsOpen(!isOpen)}
+      type='button'
+      aria-label='Открыть главное меню'
+    >
+      <span className='burger__line'></span>
+    </button>
   );
 };

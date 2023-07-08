@@ -2,13 +2,15 @@
 @import url(./vendor/fonts/font.css);
 
 @import url(./components/elements/TitleBlock/TitleBlock.css);
-@import url(./components/elements/Search/Search.css);
+@import url(./components/elements/SearchForm/SearchForm.css);
+
+@import url(./components/UI/BurgerMenu/BurgerMenu.css);
+@import url(./components/UI/ProfileButton/ProfileButton.css);
+@import url(./components/UI/SwitchToggle/SwitchToggle.css);
 
 @import url(./components/App/App.css);
 @import url(./components/Header/Header.css);
 @import url(./components/HeaderNav/HeaderNav.css);
-@import url(./components/UI/BurgerMenu/BurgerMenu.css);
-@import url(./components/UI/ProfileButton/ProfileButton.css);
 @import url(./components/MobileMenu/MobileMenu.css);
 @import url(./components/HeaderAuth/HeaderAuth.css);
 @import url(./components/Hero/Hero.css);

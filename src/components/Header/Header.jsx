@@ -1,23 +1,16 @@
-import logo from "../../images/logo.svg";
 import { HeaderAuth } from "../HeaderAuth/HeaderAuth";
 import { HeaderNav } from "../HeaderNav/HeaderNav";
 import { MobileMenu } from "../MobileMenu/MobileMenu";
 import { useState } from "react";
+import { Logo } from "../elements/Logo/Logo";
 
-export const Header = ({ isLoggedIn }) => {
+export const Header = ({ isLoggedIn, color }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <header className="header">
-      <div className="container">
-        <nav className="header__nav">
-          <a className="header__logo hover-link" href="/">
-            <img
-              className="header__img"
-              src={logo}
-              alt="Логотип Movies-Explorer"
-            />
-          </a>
-
+    <header className={`header ${color}`}>
+      <div className='container'>
+        <nav className='header__nav'>
+          <Logo position={"header__logo"} />
           {!isLoggedIn ? (
             <HeaderAuth />
           ) : (
@@ -26,7 +19,7 @@ export const Header = ({ isLoggedIn }) => {
         </nav>
       </div>
 
-      <MobileMenu isOpen={isOpen} />
+      <MobileMenu isOpen={isOpen} setIsOpen={setIsOpen} />
     </header>
   );
 };
