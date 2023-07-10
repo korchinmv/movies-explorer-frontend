@@ -7,6 +7,7 @@
 @import url(./components/UI/BurgerMenu/BurgerMenu.css);
 @import url(./components/UI/ProfileButton/ProfileButton.css);
 @import url(./components/UI/SwitchToggle/SwitchToggle.css);
+@import url(./components/UI/SwitchToggle/SwitchToggleMobile/SwitchToggleMobile.css);
 
 @import url(./components/App/App.css);
 @import url(./components/Header/Header.css);
@@ -19,5 +20,6 @@
 @import url(./components/Project/Project.css);
 @import url(./components/Technologys/Technologys.css);
 @import url(./components/AboutStudent/AboutStudent.css);
+@import url(./components/NotFound/NotFound.css);
 
 @import url(./components/Footer/Footer.css);

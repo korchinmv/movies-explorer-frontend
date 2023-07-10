@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import { Landing } from "../pages/Landing";
 import { Movies } from "../pages/Movies";
+import { NotFoundPage } from "../pages/NotFoundPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -28,6 +29,7 @@ const App = () => {
             </>
           }
         />
+        <Route exact path='/*' element={<NotFoundPage />} />
       </Routes>
     </div>
   );

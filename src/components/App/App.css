@@ -40,4 +40,8 @@ html {
   .container {
     padding: 0px 18px;
   }
+
+  .container_movies-mobile {
+    padding: 0 10px;
+  }
 }

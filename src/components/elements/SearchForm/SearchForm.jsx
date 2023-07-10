@@ -1,11 +1,12 @@
 import React from "react";
 import logo from "../../../images/arrow-right.svg";
 import { SwitchToggle } from "../../UI/SwitchToggle/SwitchToggle";
+import { SwitchToggleMobile } from "../../UI/SwitchToggle/SwitchToggleMobile/SwitchToggleMobile";
 
 export const SearchForm = () => {
   return (
     <section className='search'>
-      <div className='container'>
+      <div className='container container_movies-mobile'>
         <div className='search__wrapper'>
           <form className='search__form' action='#'>
             <div className='search__inner'>
@@ -29,6 +30,7 @@ export const SearchForm = () => {
                 position={"search-form__toggle"}
               />
             </div>
+            <SwitchToggleMobile name={"Короткометражки"} />
           </form>
         </div>
       </div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 export const SwitchToggle = ({ position, name }) => {
   return (
     <div className={`${position} switch-toggle`}>
