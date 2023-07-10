@@ -15,7 +15,7 @@
 }
 
 .header__menu-profile {
-  flex-grow: 1;
+  margin-top: auto;
 }
 
 @media screen and (max-width: 768px) {

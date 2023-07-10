@@ -1,8 +1,13 @@
 import React from "react";
 import { ProfileButton } from "../UI/ProfileButton/ProfileButton";
 import { BurgerMenu } from "../UI/BurgerMenu/BurgerMenu";
+import { NavLink } from "react-router-dom";
 
 export const MobileMenu = ({ isOpen, setIsOpen }) => {
+  const closeMenu = () => {
+    return (isOpen = false);
+  };
+
   return (
     <div className={`header__menu ${isOpen && "header__menu_active"}`}>
       <BurgerMenu
@@ -13,24 +18,24 @@ export const MobileMenu = ({ isOpen, setIsOpen }) => {
       <div className='header__menu-wrapper'>
         <ul className='header__menu-list'>
           <li className='header__menu-item'>
-            <a className='header__menu-link hover-link' href='#'>
+            <NavLink className='header__menu-link hover-link' to='/'>
               Главная
-            </a>
+            </NavLink>
           </li>
 
           <li className='header__menu-item'>
-            <a
-              className='header__menu-link header__menu-link_active hover-link'
-              href='#'
-            >
+            <NavLink className='header__menu-link hover-link' to='/movies'>
               Фильмы
-            </a>
+            </NavLink>
           </li>
 
           <li className='header__menu-item'>
-            <a className='header__menu-link hover-link' href='#'>
+            <NavLink
+              className='header__menu-link hover-link'
+              to='/saved-movies'
+            >
               Сохранённые фильмы
-            </a>
+            </NavLink>
           </li>
         </ul>
 
