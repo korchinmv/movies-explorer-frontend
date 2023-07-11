@@ -6,9 +6,11 @@ import { Movies } from "../pages/Movies";
 import { SavedMovies } from "../pages/SavedMovies";
 import { NotFoundPage } from "../pages/NotFoundPage";
 import { Profile } from "../pages/Profile";
+import { Register } from "../pages/Register";
+import { Login } from "../pages/Login";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div className='page'>
@@ -46,6 +48,22 @@ const App = () => {
             <>
               <Header isLoggedIn={isLoggedIn} />
               <Profile />
+            </>
+          }
+        />
+        <Route
+          path='/signup'
+          element={
+            <>
+              <Register />
+            </>
+          }
+        />
+        <Route
+          path='/signin'
+          element={
+            <>
+              <Login />
             </>
           }
         />

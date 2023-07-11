@@ -3,6 +3,7 @@
 
 @import url(./components/elements/TitleBlock/TitleBlock.css);
 @import url(./components/elements/SearchForm/SearchForm.css);
+@import url(./components/elements/Logo/Logo.css);
 
 @import url(./components/UI/BurgerMenu/BurgerMenu.css);
 @import url(./components/UI/ProfileButton/ProfileButton.css);
@@ -23,6 +24,7 @@
 @import url(./components/MoviesCardList/MoviesCardList.css);
 @import url(./components/MoviesCard/MoviesCard.css);
 @import url(./components/ProfileForm/ProfileForm.css);
+@import url(./components/MainForm/MainForm.css);
 @import url(./components/NotFound/NotFound.css);
 
 @import url(./components/Footer/Footer.css);
