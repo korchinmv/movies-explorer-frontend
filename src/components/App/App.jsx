@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import { Landing } from "../pages/Landing";
 import { Movies } from "../pages/Movies";
+import { SavedMovies } from "../pages/SavedMovies";
 import { NotFoundPage } from "../pages/NotFoundPage";
+import { Profile } from "../pages/Profile";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -26,6 +28,24 @@ const App = () => {
             <>
               <Header isLoggedIn={isLoggedIn} />
               <Movies />
+            </>
+          }
+        />
+        <Route
+          path='/saved-movies'
+          element={
+            <>
+              <Header isLoggedIn={isLoggedIn} />
+              <SavedMovies />
+            </>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <>
+              <Header isLoggedIn={isLoggedIn} />
+              <Profile />
             </>
           }
         />

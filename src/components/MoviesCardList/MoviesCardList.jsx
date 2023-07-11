@@ -1,5 +1,5 @@
 import { MoviesCard } from "../MoviesCard/MoviesCard";
-import image from "../../images/movies/movie.jpg";
+import image from "../../images/movie-card/movie.jpg";
 
 export const MoviesCardList = () => {
   return (
@@ -99,7 +99,7 @@ export const MoviesCardList = () => {
         </ul>
 
         <button
-          className='movies-cards__more'
+          className='movies-cards__more hover-link'
           aria-label='Добавить больше фильмов на страницу'
         >
           Ещё

@@ -1,5 +1,10 @@
 .header__movie-link {
   font-size: 13px;
+  font-weight: 400;
+}
+
+.header__movie-link.active {
+  font-weight: 500;
 }
 
 .header__movie-link:not(:last-child) {
