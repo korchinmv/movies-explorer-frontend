@@ -8,6 +8,10 @@
   background-color: #073042;
 }
 
+.header_main {
+  background-color: transparent;
+}
+
 .header__logo {
   margin-right: 20px;
 }

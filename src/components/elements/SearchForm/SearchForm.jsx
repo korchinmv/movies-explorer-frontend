@@ -5,7 +5,7 @@ import { SwitchToggleMobile } from "../../UI/SwitchToggle/SwitchToggleMobile/Swi
 
 export const SearchForm = () => {
   return (
-    <section className='search'>
+    <div className='search'>
       <div className='container container_movies-mobile'>
         <div className='search__wrapper'>
           <form className='search__form' action='#'>
@@ -27,13 +27,13 @@ export const SearchForm = () => {
               </button>
               <SwitchToggle
                 name={"Короткометражки"}
-                position={"search-form__toggle"}
+                position={"search__toggle"}
               />
             </div>
             <SwitchToggleMobile name={"Короткометражки"} />
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 };

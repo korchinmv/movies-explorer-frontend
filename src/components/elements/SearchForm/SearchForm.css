@@ -31,11 +31,15 @@
   font-size: 18px;
   border: none;
   padding: 0;
-  outline: none;
+  outline: transparent;
   width: 100%;
-  transition: border-bottom 0.3s ease-in-out;
+  transition: border-bottom 0.2s ease-in-out;
   margin-right: 46px;
   flex-grow: 1;
+}
+
+.search__input:focus {
+  border-bottom: 1px solid #4285f4;
 }
 
 .search__button {

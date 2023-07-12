@@ -9,7 +9,7 @@ export const MobileMenu = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <div className={`header__menu ${isOpen && "header__menu_active"}`}>
+    <div className={`header__menu ${isOpen ? "header__menu_active" : ""}`}>
       <BurgerMenu
         isOpen={isOpen}
         setIsOpen={setIsOpen}

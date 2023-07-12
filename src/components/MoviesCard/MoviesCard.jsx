@@ -9,7 +9,7 @@ export const MoviesCard = ({ title, duration, image, link }) => {
       <div className='movies-cards__head'>
         <div className='movies-cards__info'>
           <h3 className='movies-cards__title'>{title}</h3>
-          <time className='movies-cards__duration'>{duration}</time>
+          <p className='movies-cards__duration'>{duration}</p>
         </div>
         <button
           className={`movies-cards__favourite ${

@@ -10,7 +10,7 @@ import { Register } from "../pages/Register";
 import { Login } from "../pages/Login";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <div className='page'>
@@ -28,7 +28,7 @@ const App = () => {
           path='/movies'
           element={
             <>
-              <Header isLoggedIn={isLoggedIn} />
+              <Header isLoggedIn={isLoggedIn} color={"header_main"} />
               <Movies />
             </>
           }
@@ -37,7 +37,7 @@ const App = () => {
           path='/saved-movies'
           element={
             <>
-              <Header isLoggedIn={isLoggedIn} />
+              <Header isLoggedIn={isLoggedIn} color={"header_main"} />
               <SavedMovies />
             </>
           }
@@ -46,7 +46,7 @@ const App = () => {
           path='/profile'
           element={
             <>
-              <Header isLoggedIn={isLoggedIn} />
+              <Header isLoggedIn={isLoggedIn} color={"header_main"} />
               <Profile />
             </>
           }
