@@ -1,0 +1,23 @@
+.header {
+  background-color: transparent;
+  padding: 18px 0;
+  width: 100%;
+}
+
+.header_landing {
+  background-color: #073042;
+}
+
+.header_main {
+  background-color: transparent;
+}
+
+.header__logo {
+  margin-right: 20px;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

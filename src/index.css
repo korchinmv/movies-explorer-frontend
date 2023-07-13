@@ -1,0 +1,30 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/font.css);
+
+@import url(./components/elements/TitleBlock/TitleBlock.css);
+@import url(./components/elements/SearchForm/SearchForm.css);
+@import url(./components/elements/Logo/Logo.css);
+
+@import url(./components/UI/BurgerMenu/BurgerMenu.css);
+@import url(./components/UI/ProfileButton/ProfileButton.css);
+@import url(./components/UI/SwitchToggle/SwitchToggle.css);
+@import url(./components/UI/SwitchToggle/SwitchToggleMobile/SwitchToggleMobile.css);
+
+@import url(./components/App/App.css);
+@import url(./components/Header/Header.css);
+@import url(./components/HeaderNav/HeaderNav.css);
+@import url(./components/MobileMenu/MobileMenu.css);
+@import url(./components/HeaderAuth/HeaderAuth.css);
+@import url(./components/Hero/Hero.css);
+@import url(./components/Navigation/Navigation.css);
+@import url(./components/Main/Main.css);
+@import url(./components/Project/Project.css);
+@import url(./components/Technologys/Technologys.css);
+@import url(./components/AboutStudent/AboutStudent.css);
+@import url(./components/MoviesCardList/MoviesCardList.css);
+@import url(./components/MoviesCard/MoviesCard.css);
+@import url(./components/ProfileForm/ProfileForm.css);
+@import url(./components/MainForm/MainForm.css);
+@import url(./components/NotFound/NotFound.css);
+
+@import url(./components/Footer/Footer.css);
