@@ -1,6 +1,8 @@
 .movies-cards__item {
   background-color: #222222;
   box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
 }
 
 .movies-cards__head {
@@ -39,6 +41,13 @@
   background-image: url("../../images/movie-card/like-saved.svg");
 }
 
+.movies-cards__link {
+  display: block;
+  margin-top: auto;
+}
+
 .movies-cards__image {
   width: 100%;
+  object-fit: cover;
+  height: 203px;
 }

@@ -8,9 +8,22 @@ import { NotFoundPage } from "../pages/NotFoundPage";
 import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
 import { Login } from "../pages/Login";
+import moviesApi from "../../utils/MoviesApi.js";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [movies, setMovies] = useState([]);
+
+  localStorage.setItem("movies", JSON.stringify(movies));
+
+  useEffect(() => {
+    moviesApi
+      .getMovies()
+      .then((resp) => {
+        setMovies(resp);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className='page'>

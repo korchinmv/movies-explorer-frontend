@@ -1,101 +1,18 @@
+import { useState } from "react";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
-import image from "../../images/movie-card/movie.jpg";
 
 export const MoviesCardList = () => {
+  const [preloader, setPreloader] = useState();
+  const jsonMovies = localStorage.getItem("movies");
+  const movies = JSON.parse(jsonMovies);
+
   return (
     <section className='movies-cards'>
       <div className='container'>
         <ul className='movies-cards__list'>
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
-
-          <MoviesCard
-            title='Фильм'
-            duration='1ч 47м'
-            image={image}
-            link='https://www.youtube.com/watch?v=Zg1NhmDxu2w'
-          />
+          {movies.map((movie) => {
+            return <MoviesCard movie={movie} key={movie.id} />;
+          })}
         </ul>
 
         <button
