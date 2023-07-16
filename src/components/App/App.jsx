@@ -13,6 +13,13 @@ import moviesApi from "../../utils/MoviesApi.js";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [movies, setMovies] = useState([]);
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+  });
+  const [token, setToken] = useState("");
+  const [registrationError, setRegistrationError] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   localStorage.setItem("movies", JSON.stringify(movies));
 
