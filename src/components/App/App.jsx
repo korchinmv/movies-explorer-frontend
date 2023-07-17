@@ -46,6 +46,12 @@ const App = () => {
             console.log(err);
           });
 
+        Auth.getUserData()
+          .then((resp) => {
+            setCurrentUser(resp.data);
+          })
+          .catch((err) => console.log(err));
+
         moviesApi
           .getMovies()
           .then((resp) => {
@@ -84,7 +90,11 @@ const App = () => {
       });
   };
 
-  useEffect(() => {}, []);
+  const logOut = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    navigate("/signin");
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -122,7 +132,11 @@ const App = () => {
             element={
               <>
                 <Header isLoggedIn={isLoggedIn} color={"header_main"} />
-                <Profile userName={userName} userEmail={userEmail} />
+                <Profile
+                  userName={userName}
+                  userEmail={userEmail}
+                  logOut={logOut}
+                />
               </>
             }
           />

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ProfileForm = () => {
+export const ProfileForm = ({ logOut }) => {
   return (
     <section className='profile'>
       <h1 className='profile__greeting'>Привет, Виталий!</h1>
@@ -33,7 +33,9 @@ export const ProfileForm = () => {
         </button>
       </form>
 
-      <button className='profile__logout hover-link'>Выйти из аккаунта</button>
+      <button className='profile__logout hover-link' onClick={logOut}>
+        Выйти из аккаунта
+      </button>
     </section>
   );
 };
