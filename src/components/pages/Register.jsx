@@ -1,8 +1,8 @@
 import { MainForm } from "../MainForm/MainForm";
 import { useForm } from "../../hooks/useForm";
 
-export const Register = ({ registerUser }) => {
-  const { form, handleChange, errors, isValid } = useForm({
+export const Register = ({ registerUser, errorMessage }) => {
+  const { form, errors, isValid, handleChange } = useForm({
     name: "",
     password: "",
     email: "",
@@ -10,10 +10,11 @@ export const Register = ({ registerUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { password, email, name } = form;
-    // registerUser(password, email, name);
-    console.log(password, email, name);
+    const { name, email, password } = form;
+
+    registerUser(name, email, password);
   };
+
   return (
     <MainForm
       title='Добро пожаловать!'
@@ -21,6 +22,7 @@ export const Register = ({ registerUser }) => {
       nameButton='Зарегистрироваться'
       submit={handleSubmit}
       isValid={isValid}
+      errorMessage={errorMessage}
     >
       <label className='main-form__label' htmlFor='name'>
         Имя
@@ -34,7 +36,7 @@ export const Register = ({ registerUser }) => {
           placeholder='Имя'
           value={form.name || ""}
           minLength='2'
-          maxLength='12'
+          maxLength='20'
           onChange={handleChange}
           required
         />
@@ -51,10 +53,10 @@ export const Register = ({ registerUser }) => {
           id='email'
           placeholder='Почта'
           minLength='5'
-          maxLength='18'
+          maxLength='30'
           value={form.email || ""}
           onChange={handleChange}
-          pattern='([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)'
+          pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           required
         />
         {errors.email && <span className='input-error'>{errors.email}</span>}

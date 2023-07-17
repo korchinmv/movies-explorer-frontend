@@ -8,6 +8,7 @@ export const MainForm = ({
   submit,
   isValid,
   children,
+  errorMessage,
 }) => {
   return (
     <section className='main-form'>
@@ -18,6 +19,7 @@ export const MainForm = ({
 
           <form className='main-form__form' name={nameForm} onSubmit={submit}>
             {children}
+            <p className='main-form__error'>{errorMessage}</p>
             <button
               className={`main-form__submit ${
                 !isValid ? "main-form__submit_disabled" : ""

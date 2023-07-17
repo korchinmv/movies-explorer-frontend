@@ -63,6 +63,11 @@ input:-webkit-autofill {
   color: #fff;
 }
 
+.main-form__error {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .main-form__submit {
   background-color: #4285f4;
   border-radius: 3px;

@@ -1,17 +1,16 @@
 import { MainForm } from "../MainForm/MainForm";
 import { useForm } from "../../hooks/useForm";
 
-export const Login = ({ loginUser }) => {
+export const Login = ({ loginUser, errorMessage }) => {
   const { form, handleChange, errors, isValid } = useForm({
-    password: "",
     email: "",
+    password: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { password, email } = form;
-    // loginUser(password, email);
-    console.log(password, email);
+    const { email, password } = form;
+    loginUser(email, password);
   };
   return (
     <MainForm
@@ -20,6 +19,7 @@ export const Login = ({ loginUser }) => {
       nameButton='Войти'
       submit={handleSubmit}
       isValid={isValid}
+      errorMessage={errorMessage}
     >
       <label className='main-form__label' htmlFor='email'>
         E-mail{" "}
@@ -30,10 +30,10 @@ export const Login = ({ loginUser }) => {
           id='email'
           placeholder='Почта'
           minLength='5'
-          maxLength='18'
+          maxLength='30'
           value={form.email || ""}
           onChange={handleChange}
-          pattern='([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)'
+          pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           required
         />
         {errors.email && <span className='input-error'>{errors.email}</span>}

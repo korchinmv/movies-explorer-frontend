@@ -13,7 +13,6 @@ export const useForm = (inputValues) => {
       const customError = !isEmail(value)
         ? "Формат электронной почты указан неверно"
         : "";
-      console.log(customError);
       setErrors({ ...errors, [name]: customError });
     } else {
       setErrors({ ...errors, [name]: event.target.validationMessage });
@@ -22,5 +21,5 @@ export const useForm = (inputValues) => {
     setIsValid(event.target.closest("form").checkValidity());
   };
 
-  return { form, handleChange, isValid, errors };
+  return { form, isValid, errors, handleChange };
 };
