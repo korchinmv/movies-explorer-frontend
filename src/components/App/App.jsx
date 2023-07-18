@@ -2,7 +2,6 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useEffect, useState } from "react";
 import * as Auth from "../../utils/Auth";
-import { Header } from "../Header/Header";
 import { Landing } from "../pages/Landing";
 import { Movies } from "../pages/Movies";
 import { SavedMovies } from "../pages/SavedMovies";
@@ -11,6 +10,7 @@ import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
 import { Login } from "../pages/Login";
 import moviesApi from "../../utils/MoviesApi.js";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,12 +19,9 @@ const App = () => {
     name: "",
     email: "",
   });
-  const [token, setToken] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState("");
-  const [userName, setUserName] = useState("");
   const [currentUser, setCurrentUser] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     tokenCheck();
@@ -35,22 +32,15 @@ const App = () => {
       const jwt = localStorage.getItem("jwt");
       if (jwt) {
         Auth.getUserData(jwt)
-          .then((res) => {
-            setUserEmail(res.email);
-            setUserName(res.email);
+          .then((resp) => {
             setIsLoggedIn(true);
-            navigate("/");
+            setCurrentUser(resp.data);
+            navigate("/movies");
           })
           .catch((err) => {
             localStorage.removeItem("jwt");
             console.log(err);
           });
-
-        Auth.getUserData()
-          .then((resp) => {
-            setCurrentUser(resp.data);
-          })
-          .catch((err) => console.log(err));
 
         moviesApi
           .getMovies()
@@ -92,7 +82,9 @@ const App = () => {
 
   const logOut = () => {
     localStorage.removeItem("jwt");
+    // localStorage.removeItem("movies");
     setIsLoggedIn(false);
+    setMovies([]);
     navigate("/signin");
   };
 
@@ -100,71 +92,57 @@ const App = () => {
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Routes>
-          <Route
-            path='/'
-            element={
-              <>
-                <Header isLoggedIn={isLoggedIn} color={"header_landing"} />
-                <Landing />
-              </>
-            }
-          />
+          <Route path='/' element={<Landing isLoggedIn={isLoggedIn} />} />
+
           <Route
             path='/movies'
             element={
-              <>
-                <Header isLoggedIn={isLoggedIn} color={"header_main"} />
-                <Movies />
-              </>
+              <ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} />
             }
           />
+
           <Route
             path='/saved-movies'
             element={
-              <>
-                <Header isLoggedIn={isLoggedIn} color={"header_main"} />
-                <SavedMovies />
-              </>
+              <ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />
             }
           />
+
           <Route
             path='/profile'
             element={
-              <>
-                <Header isLoggedIn={isLoggedIn} color={"header_main"} />
-                <Profile
-                  userName={userName}
-                  userEmail={userEmail}
-                  logOut={logOut}
-                />
-              </>
+              <ProtectedRoute
+                element={Profile}
+                logOut={logOut}
+                isLoggedIn={isLoggedIn}
+              />
             }
           />
+
           <Route
             path='/signup'
             element={
-              <>
-                <Register
-                  registerUser={registerUser}
-                  errorMessage={errorMessage}
-                />
-              </>
+              <Register
+                registerUser={registerUser}
+                errorMessage={errorMessage}
+              />
             }
           />
+
           <Route
             path='/signin'
             element={
-              <>
-                <Login loginUser={loginUser} errorMessage={errorMessage} />
-              </>
+              <Login loginUser={loginUser} errorMessage={errorMessage} />
             }
           />
-          <Route
+
+          {/* <Route
             path='/'
             element={
               isLoggedIn ? <Navigate to='/movies' /> : <Navigate to='/signin' />
             }
-          />
+          /> */}
+
           <Route exact path='/*' element={<NotFoundPage />} />
         </Routes>
       </div>
