@@ -30,21 +30,21 @@ class Api {
     return fetch(url, options).then(this._getJson);
   }
 
+  sendUser(data) {
+    const promise = fetch(`${this._URL}users/me`, {
+      method: "PATCH",
+      headers: this._getHeaders(),
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+      }),
+    });
+    return promise.then(this._getJson);
+  }
+
   // getCards() {
   //   const promise = fetch(`${this._URL}cards`, {
   //     headers: this._getHeaders(),
-  //   });
-  //   return promise.then(this._getJson);
-  // }
-
-  // sendUser(data) {
-  //   const promise = fetch(`${this._URL}users/me`, {
-  //     method: "PATCH",
-  //     headers: this._getHeaders(),
-  //     body: JSON.stringify({
-  //       name: data.name,
-  //       email: data.email,
-  //     }),
   //   });
   //   return promise.then(this._getJson);
   // }
@@ -89,15 +89,6 @@ class Api {
   //   const promise = fetch(`${this._URL}cards/${id}/likes`, {
   //     method: "DELETE",
   //     headers: this._getHeaders(),
-  //   });
-  //   return promise.then(this._getJson);
-  // }
-
-  // setAvatar(avatar) {
-  //   const promise = fetch(`${this._URL}users/me/avatar`, {
-  //     method: "PATCH",
-  //     headers: this._getHeaders(),
-  //     body: JSON.stringify(avatar),
   //   });
   //   return promise.then(this._getJson);
   // }

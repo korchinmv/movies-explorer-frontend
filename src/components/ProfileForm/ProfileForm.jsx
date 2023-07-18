@@ -1,11 +1,31 @@
-import React from "react";
+import { useContext, useState, useEffect } from "react";
+import { useForm } from "../../hooks/useForm";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export const ProfileForm = ({ logOut }) => {
+export const ProfileForm = ({ logOut, updateUser }) => {
+  const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const { form, handleChange, errors, isValid } = useForm({
+    email: "",
+    password: "",
+  });
+  useEffect(() => {
+    setName(currentUser.name);
+    setEmail(currentUser.email);
+  }, [currentUser]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, email } = form;
+    updateUser(name, email);
+  };
+
   return (
     <section className='profile'>
-      <h1 className='profile__greeting'>Привет, Виталий!</h1>
+      <h1 className='profile__greeting'>{`Привет, ${currentUser.name}!`}</h1>
 
-      <form className='profile__form' action='#'>
+      <form className='profile__form' action='#' onSubmit={handleSubmit}>
         <label className='profile__label' htmlFor='input-name'>
           Имя
           <input
@@ -13,7 +33,11 @@ export const ProfileForm = ({ logOut }) => {
             type='text'
             name='input-name'
             id='input-name'
-            placeholder='Виталий'
+            placeholder='Имя'
+            minLength='2'
+            maxLength='20'
+            value={form.name || name}
+            onChange={handleChange}
           />
         </label>
 
@@ -24,7 +48,12 @@ export const ProfileForm = ({ logOut }) => {
             type='email'
             name='input-email'
             id='input-email'
-            placeholder='pochta@yandex.ru'
+            placeholder='Почта'
+            value={form.email || ""}
+            minLength='5'
+            maxLength='30'
+            onChange={handleChange}
+            pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           />
         </label>
 
