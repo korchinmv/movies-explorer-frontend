@@ -25,6 +25,7 @@ const App = () => {
 
   useEffect(() => {
     tokenCheck();
+    console.log(123);
   }, []);
 
   const tokenCheck = () => {
