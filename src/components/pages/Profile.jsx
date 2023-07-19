@@ -1,12 +1,14 @@
-import { useContext } from "react";
+import { Header } from "../Header/Header";
 import { Main } from "../Main/Main";
 import { ProfileForm } from "../ProfileForm/ProfileForm";
 
-export const Profile = ({ logOut }) => {
-  // const currentUser = useContext(CurrentUserContext);
+export const Profile = ({ logOut, isLoggedIn, updateUser }) => {
   return (
-    <Main>
-      <ProfileForm logOut={logOut} />
-    </Main>
+    <>
+      <Header isLoggedIn={isLoggedIn} color={"header_main"} />
+      <Main>
+        <ProfileForm logOut={logOut} updateUser={updateUser} />
+      </Main>
+    </>
   );
 };

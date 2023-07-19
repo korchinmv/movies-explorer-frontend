@@ -50,6 +50,23 @@
   width: 80%;
 }
 
+.profile__submit {
+  background-color: #4285f4;
+  border-radius: 3px;
+  padding: 13px 5px 15px 5px;
+  font-weight: 500;
+  width: 100%;
+}
+
+.profile__submit_disabled {
+  background: #f8f8f8;
+  color: #c2c2c2;
+}
+
+.profile__input:disabled {
+  opacity: 0.5;
+}
+
 .profile__input::placeholder {
   color: inherit;
 }
@@ -59,9 +76,21 @@
   font-size: 13px;
 }
 
+.profile__edit_hidden,
+.profile__logout_hidden,
+.profile__submit_hidden {
+  display: none;
+}
+
 .profile__logout {
   color: #ee3465;
   font-weight: 500;
+}
+
+.profile__error {
+  color: #ff004c;
+  text-align: center;
+  font-size: 11px;
 }
 
 @media screen and (max-width: 768px) {

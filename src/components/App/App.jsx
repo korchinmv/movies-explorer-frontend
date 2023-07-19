@@ -10,48 +10,48 @@ import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
 import { Login } from "../pages/Login";
 import moviesApi from "../../utils/MoviesApi.js";
+import MainApi from "../../utils/MainApi.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-  });
   const [errorMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     tokenCheck();
-    console.log(123);
+    getMovie();
   }, []);
 
   const tokenCheck = () => {
-    if (localStorage.getItem("jwt")) {
-      const jwt = localStorage.getItem("jwt");
-      if (jwt) {
-        Auth.getUserData(jwt)
-          .then((resp) => {
-            setIsLoggedIn(true);
-            setCurrentUser(resp.data);
-            navigate("/movies");
-          })
-          .catch((err) => {
-            localStorage.removeItem("jwt");
-            console.log(err);
-          });
-
-        moviesApi
-          .getMovies()
-          .then((resp) => {
-            localStorage.setItem("movies", JSON.stringify(movies));
-            setMovies(resp);
-          })
-          .catch((err) => console.log(err));
-      }
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) {
+      setIsLoggedIn(false);
+      console.log(jwt);
+      console.log(isLoggedIn);
     }
+
+    Auth.getUserData(jwt)
+      .then((resp) => {
+        setIsLoggedIn(true);
+        setCurrentUser(resp);
+      })
+      .catch((err) => {
+        localStorage.removeItem("jwt");
+        console.log(err);
+      });
+  };
+
+  const getMovie = () => {
+    moviesApi
+      .getMovies()
+      .then((resp) => {
+        localStorage.setItem("movies", JSON.stringify(movies));
+        setMovies(resp);
+      })
+      .catch((err) => console.log(err));
   };
 
   const registerUser = (name, password, email) => {
@@ -72,6 +72,7 @@ const App = () => {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         tokenCheck();
+        navigate("/movies");
       })
       .catch((err) => {
         console.log(err);
@@ -83,19 +84,46 @@ const App = () => {
 
   const logOut = () => {
     localStorage.removeItem("jwt");
-    // localStorage.removeItem("movies");
+    localStorage.removeItem("movies");
     setIsLoggedIn(false);
     setMovies([]);
-    navigate("/signin");
+    navigate("/");
+  };
+
+  const updateUser = (form) => {
+    MainApi.sendUser(form)
+      .then((resp) => {
+        setCurrentUser(resp);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err) {
+          setErrorMessage("При обновлении профиля произошла ошибка.");
+        }
+      });
   };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Routes>
-          <Route path='/' element={<Landing isLoggedIn={isLoggedIn} />} />
+          <Route index path='/' element={<Landing isLoggedIn={isLoggedIn} />} />
 
           <Route
+            exact
+            path='/profile'
+            element={
+              <ProtectedRoute
+                element={Profile}
+                logOut={logOut}
+                isLoggedIn={isLoggedIn}
+                updateUser={updateUser}
+              />
+            }
+          />
+
+          <Route
+            exact
             path='/movies'
             element={
               <ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} />
@@ -103,6 +131,7 @@ const App = () => {
           />
 
           <Route
+            exact
             path='/saved-movies'
             element={
               <ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />
@@ -110,17 +139,7 @@ const App = () => {
           />
 
           <Route
-            path='/profile'
-            element={
-              <ProtectedRoute
-                element={Profile}
-                logOut={logOut}
-                isLoggedIn={isLoggedIn}
-              />
-            }
-          />
-
-          <Route
+            exact
             path='/signup'
             element={
               <Register
@@ -131,18 +150,12 @@ const App = () => {
           />
 
           <Route
+            exact
             path='/signin'
             element={
               <Login loginUser={loginUser} errorMessage={errorMessage} />
             }
           />
-
-          {/* <Route
-            path='/'
-            element={
-              isLoggedIn ? <Navigate to='/movies' /> : <Navigate to='/signin' />
-            }
-          /> */}
 
           <Route exact path='/*' element={<NotFoundPage />} />
         </Routes>

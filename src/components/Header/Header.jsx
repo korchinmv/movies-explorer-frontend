@@ -11,7 +11,7 @@ export const Header = ({ isLoggedIn, color }) => {
       <div className='container'>
         <nav className='header__nav'>
           <Logo position={"header__logo"} />
-          {isLoggedIn ? (
+          {!isLoggedIn ? (
             <HeaderAuth />
           ) : (
             <HeaderNav isOpen={isOpen} setIsOpen={setIsOpen} />
