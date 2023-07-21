@@ -3,7 +3,13 @@ import { Main } from "../Main/Main";
 import { Preloader } from "../Preloader/Preloader";
 import { ProfileForm } from "../ProfileForm/ProfileForm";
 
-export const Profile = ({ logOut, isLoggedIn, updateUser, isLoading }) => {
+export const Profile = ({
+  logOut,
+  isLoggedIn,
+  updateUser,
+  isLoading,
+  successfulMessage,
+}) => {
   return isLoading ? (
     <Preloader />
   ) : (

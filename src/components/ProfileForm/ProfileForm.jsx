@@ -2,7 +2,12 @@ import { useContext, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
+export const ProfileForm = ({
+  logOut,
+  updateUser,
+  errorMessage,
+  successfulMessage,
+}) => {
   const currentUser = useContext(CurrentUserContext);
   const [nameDisabled, setNameDisabled] = useState(true);
   const [emailDisabled, setEmailDisabled] = useState(true);
@@ -28,58 +33,64 @@ export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
   };
 
   return (
-    <section className='profile'>
-      <h1 className='profile__greeting'>{`Привет, ${currentUser.name}!`}</h1>
+    <section className="profile">
+      <h1 className="profile__greeting">{`Привет, ${currentUser.name}!`}</h1>
 
-      <form className='profile__form' action='#' onSubmit={handleSubmit}>
-        <label className='profile__label' htmlFor='input-name'>
+      <form className="profile__form" action="#" onSubmit={handleSubmit}>
+        <label className="profile__label" htmlFor="input-name">
           Имя
           <input
-            className='profile__input'
-            type='text'
-            name='name'
-            id='input-name'
-            placeholder='Имя'
-            minLength='2'
-            maxLength='20'
+            className="profile__input"
+            type="text"
+            name="name"
+            id="input-name"
+            placeholder="Имя"
+            minLength="2"
+            maxLength="20"
             disabled={nameDisabled}
             value={form.name || ""}
             onChange={handleChange}
           />
           {errors.name && (
-            <span className='profile__input-error input-error'>
+            <span className="profile__input-error input-error">
               {errors.name}
             </span>
           )}
         </label>
 
-        <label className='profile__label' htmlFor='input-email'>
+        <label className="profile__label" htmlFor="input-email">
           E-mail
           <input
-            className='profile__input'
-            type='email'
-            name='email'
-            id='input-email'
-            placeholder='Почта'
+            className="profile__input"
+            type="email"
+            name="email"
+            id="input-email"
+            placeholder="Почта"
             value={form.email || ""}
-            minLength='5'
-            maxLength='30'
+            minLength="5"
+            maxLength="30"
             disabled={emailDisabled}
             onChange={handleChange}
-            pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
+            pattern="([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+"
           />
           {errors.email && (
-            <span className='profile__input-error input-error '>
+            <span className="profile__input-error input-error ">
               {errors.email}
             </span>
           )}
         </label>
 
+        {successfulMessage !== "" ? (
+          <div className="profile__message">{successfulMessage}</div>
+        ) : (
+          ""
+        )}
+
         <button
           className={`profile__edit ${
             !buttonEditForm ? "profile__edit_hidden" : ""
           } hover-link`}
-          type='button'
+          type="button"
           onClick={handleEdit}
         >
           {" "}
@@ -87,7 +98,7 @@ export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
         </button>
 
         {errorMessage !== "" ? (
-          <p className='profile__error'>{errorMessage}</p>
+          <p className="profile__error">{errorMessage}</p>
         ) : (
           ""
         )}
@@ -97,7 +108,7 @@ export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
             !isValid ? "profile__submit_disabled" : ""
           } ${!buttonSubmitForm ? "profile__submit_hidden" : ""} hover-link`}
           disabled={!isValid}
-          type='submit'
+          type="submit"
         >
           Сохранить
         </button>

@@ -14,45 +14,51 @@ import MainApi from "../../utils/MainApi.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const App = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successfulMessage, setSuccessfulMessage] = useState("");
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [tokenExist, setTokenExist] = useState(true);
+  const jwt = localStorage.getItem("jwt");
 
-  useEffect(() => {
-    getUserInfo();
-    getMovie();
-  }, []);
+  // useEffect(() => {
+  //   getMovie();
+  // }, []);
 
-  const getUserInfo = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (!jwt) {
-      setIsLoggedIn(false);
-    }
+  const getUserData = (jwt) => {
     Auth.getUserData(jwt)
       .then((resp) => {
-        setCurrentUser(resp);
+        console.log(resp);
         setIsLoggedIn(true);
-        console.log(jwt);
-        console.log(isLoggedIn);
+        setCurrentUser(resp);
       })
       .catch((err) => {
         localStorage.removeItem("jwt");
+        setTokenExist(false);
         console.log(err);
       });
   };
 
-  const getMovie = () => {
-    moviesApi
-      .getMovies()
-      .then((resp) => {
-        localStorage.setItem("movies", JSON.stringify(movies));
-        setMovies(resp);
-      })
-      .catch((err) => console.log(err));
-  };
+  useEffect(() => {
+    if (jwt) {
+      getUserData(jwt);
+    } else {
+      setTokenExist(false);
+    }
+  }, [jwt]);
+
+  // const getMovie = () => {
+  //   moviesApi
+  //     .getMovies()
+  //     .then((resp) => {
+  //       localStorage.setItem("movies", JSON.stringify(movies));
+  //       setMovies(resp);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   const registerUser = (name, password, email) => {
     Auth.registerUser(name, password, email)
@@ -72,7 +78,7 @@ const App = () => {
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
-        getUserInfo();
+        setTokenExist(true);
         navigate("/movies");
       })
       .catch((err) => {
@@ -96,6 +102,7 @@ const App = () => {
     MainApi.sendUser(form)
       .then((resp) => {
         setCurrentUser(resp);
+        setSuccessfulMessage("Данные успешно обновились");
       })
       .catch((err) => {
         console.log(err);
@@ -110,17 +117,17 @@ const App = () => {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className='page'>
+      <div className="page">
         <Routes>
           <Route
             index
-            path='/'
+            path="/"
             element={<Landing isLoggedIn={isLoggedIn} isLoading={isLoading} />}
           />
 
           <Route
             exact
-            path='/profile'
+            path="/profile"
             element={
               <ProtectedRoute
                 element={Profile}
@@ -128,37 +135,41 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 updateUser={updateUser}
                 isLoading={isLoading}
+                tokenExist={tokenExist}
+                successfulMessage={successfulMessage}
               />
             }
           />
 
           <Route
             exact
-            path='/movies'
+            path="/movies"
             element={
               <ProtectedRoute
                 element={Movies}
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
+                tokenExist={tokenExist}
               />
             }
           />
 
           <Route
             exact
-            path='/saved-movies'
+            path="/saved-movies"
             element={
               <ProtectedRoute
                 element={SavedMovies}
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
+                tokenExist={tokenExist}
               />
             }
           />
 
           <Route
             exact
-            path='/signup'
+            path="/signup"
             element={
               <Register
                 registerUser={registerUser}
@@ -169,13 +180,13 @@ const App = () => {
 
           <Route
             exact
-            path='/signin'
+            path="/signin"
             element={
               <Login loginUser={loginUser} errorMessage={errorMessage} />
             }
           />
 
-          <Route exact path='/*' element={<NotFoundPage />} />
+          <Route exact path="/*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </CurrentUserContext.Provider>
