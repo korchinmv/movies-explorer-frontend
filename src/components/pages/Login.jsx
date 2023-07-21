@@ -1,8 +1,26 @@
 import { MainForm } from "../MainForm/MainForm";
+import { useForm } from "../../hooks/useForm";
 
-export const Login = () => {
+export const Login = ({ loginUser, errorMessage }) => {
+  const { form, handleChange, errors, isValid } = useForm({
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { email, password } = form;
+    loginUser(email, password);
+  };
   return (
-    <MainForm title='Рады видеть!' nameForm='login' nameButton='Войти'>
+    <MainForm
+      title='Рады видеть!'
+      nameForm='login'
+      nameButton='Войти'
+      submit={handleSubmit}
+      isValid={isValid}
+      errorMessage={errorMessage}
+    >
       <label className='main-form__label' htmlFor='email'>
         E-mail{" "}
         <input
@@ -10,22 +28,37 @@ export const Login = () => {
           name='email'
           type='email'
           id='email'
-          placeholder='pochta@yandex.ru|'
+          placeholder='Почта'
+          minLength='5'
+          maxLength='30'
+          value={form.email || ""}
+          onChange={handleChange}
+          pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           required
         />
-        <span className='input-error'>Что-то пошло не так...</span>
+        {errors.email && (
+          <span className='main-form__input-error input-error'>
+            {errors.email}
+          </span>
+        )}
       </label>
       <label className='main-form__label' htmlFor='password'>
         Пароль
         <input
-          className='main-form__input input-text-error'
+          className='main-form__input'
           name='password'
           type='password'
           id='password'
           placeholder='Пароль'
+          minLength='4'
+          maxLength='12'
+          value={form.password || ""}
+          onChange={handleChange}
           required
         />
-        <span className='input-error'>Что-то пошло не так...</span>
+        <span className='main-form__input-error input-error'>
+          {errors.password}
+        </span>
       </label>
     </MainForm>
   );

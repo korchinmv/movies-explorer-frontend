@@ -1,3 +1,4 @@
+import { Header } from "../Header/Header";
 import { Hero } from "../Hero/Hero";
 import { Navigation } from "../Navigation/Navigation";
 import { Project } from "../Project/Project";
@@ -6,9 +7,10 @@ import { AboutStudent } from "../AboutStudent/AboutStudent";
 import { Main } from "../Main/Main";
 import { Footer } from "../Footer/Footer";
 
-export const Landing = () => {
+export const Landing = ({ isLoggedIn }) => {
   return (
     <>
+      <Header isLoggedIn={isLoggedIn} color={"header_landing"} />
       <Main>
         <Hero />
         <Navigation />

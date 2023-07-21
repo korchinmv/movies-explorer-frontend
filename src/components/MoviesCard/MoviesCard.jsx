@@ -1,15 +1,25 @@
 import { useState } from "react";
 
-export const MoviesCard = ({ title, duration, image, link }) => {
-  const [savedMovie, setSavedMovie] = useState(true);
-  const isLiked = true;
+export const MoviesCard = ({ movie }) => {
+  const [savedMovie, setSavedMovie] = useState(false);
+  const isLiked = false;
+
+  const timeЕranslation = () => {
+    const totalMinutes = movie.duration;
+    const minutes = totalMinutes % 60;
+    const hours = Math.floor(totalMinutes / 60);
+
+    return `${hours}ч ${minutes !== 0 ? minutes + "м" : ""}`;
+  };
 
   return (
     <li className='movies-cards__item'>
       <div className='movies-cards__head'>
         <div className='movies-cards__info'>
-          <h3 className='movies-cards__title'>{title}</h3>
-          <p className='movies-cards__duration'>{duration}</p>
+          <h3 className='movies-cards__title'>{movie.nameRU}</h3>
+          <p className='movies-cards__duration'>
+            {movie.duration > 60 ? timeЕranslation() : `${movie.duration} мин`}
+          </p>
         </div>
         <button
           className={`movies-cards__favourite ${
@@ -22,11 +32,11 @@ export const MoviesCard = ({ title, duration, image, link }) => {
         className='movies-cards__link hover-link'
         target='_blank'
         rel='noreferrer'
-        href={link}
+        href={movie.trailerLink}
       >
         <img
           className='movies-cards__image'
-          src={image}
+          src={`https://api.nomoreparties.co/${movie.image.url}`}
           alt='Изображение фильма'
         />
       </a>
