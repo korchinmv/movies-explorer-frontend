@@ -10,9 +10,9 @@ export const MoviesCardList = () => {
     <section className='movies-cards'>
       <div className='container'>
         <ul className='movies-cards__list'>
-          {movies.map((movie) => {
+          {/* {movies.map((movie) => {
             return <MoviesCard movie={movie} key={movie.id} />;
-          })}
+          })} */}
         </ul>
 
         <button
