@@ -108,6 +108,9 @@ input:-webkit-autofill {
   line-height: 1;
   position: absolute;
   left: 0;
+}
+
+.main-form__input-error {
   bottom: -20px;
 }
 

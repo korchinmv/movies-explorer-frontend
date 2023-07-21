@@ -40,7 +40,11 @@ export const Register = ({ registerUser, errorMessage }) => {
           onChange={handleChange}
           required
         />
-        {errors.name && <span className='input-error'>{errors.name}</span>}
+        {errors.name && (
+          <span className='main-form__input-error input-error'>
+            {errors.name}
+          </span>
+        )}
       </label>
       <label className='main-form__label' htmlFor='email'>
         E-mail{" "}
@@ -59,7 +63,11 @@ export const Register = ({ registerUser, errorMessage }) => {
           pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           required
         />
-        {errors.email && <span className='input-error'>{errors.email}</span>}
+        {errors.email && (
+          <span className='main-form__input-error input-error'>
+            {errors.email}
+          </span>
+        )}
       </label>
       <label className='main-form__label' htmlFor='password'>
         Пароль
@@ -78,7 +86,9 @@ export const Register = ({ registerUser, errorMessage }) => {
           required
         />
         {errors.password && (
-          <span className='input-error'>{errors.password}</span>
+          <span className='main-form__input-error input-error'>
+            {errors.password}
+          </span>
         )}
       </label>
     </MainForm>

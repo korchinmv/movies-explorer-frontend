@@ -18,25 +18,25 @@ const App = () => {
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    tokenCheck();
+    getUserInfo();
     getMovie();
   }, []);
 
-  const tokenCheck = () => {
+  const getUserInfo = () => {
     const jwt = localStorage.getItem("jwt");
     if (!jwt) {
       setIsLoggedIn(false);
-      console.log(jwt);
-      console.log(isLoggedIn);
     }
-
     Auth.getUserData(jwt)
       .then((resp) => {
-        setIsLoggedIn(true);
         setCurrentUser(resp);
+        setIsLoggedIn(true);
+        console.log(jwt);
+        console.log(isLoggedIn);
       })
       .catch((err) => {
         localStorage.removeItem("jwt");
@@ -71,13 +71,14 @@ const App = () => {
     Auth.authorizeUser(email, password)
       .then((res) => {
         localStorage.setItem("jwt", res.token);
-        tokenCheck();
+        setIsLoggedIn(true);
+        getUserInfo();
         navigate("/movies");
       })
       .catch((err) => {
         console.log(err);
         if (err) {
-          setErrorMessage("Произошла ошибка, попрбуйте еще раз...");
+          setErrorMessage("Произошла ошибка авторизации, попрбуйте еще раз...");
         }
       });
   };
@@ -91,6 +92,7 @@ const App = () => {
   };
 
   const updateUser = (form) => {
+    setIsLoading(true);
     MainApi.sendUser(form)
       .then((resp) => {
         setCurrentUser(resp);
@@ -100,6 +102,9 @@ const App = () => {
         if (err) {
           setErrorMessage("При обновлении профиля произошла ошибка.");
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -107,7 +112,11 @@ const App = () => {
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
         <Routes>
-          <Route index path='/' element={<Landing isLoggedIn={isLoggedIn} />} />
+          <Route
+            index
+            path='/'
+            element={<Landing isLoggedIn={isLoggedIn} isLoading={isLoading} />}
+          />
 
           <Route
             exact
@@ -118,6 +127,7 @@ const App = () => {
                 logOut={logOut}
                 isLoggedIn={isLoggedIn}
                 updateUser={updateUser}
+                isLoading={isLoading}
               />
             }
           />
@@ -126,7 +136,11 @@ const App = () => {
             exact
             path='/movies'
             element={
-              <ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} />
+              <ProtectedRoute
+                element={Movies}
+                isLoggedIn={isLoggedIn}
+                isLoading={isLoading}
+              />
             }
           />
 
@@ -134,7 +148,11 @@ const App = () => {
             exact
             path='/saved-movies'
             element={
-              <ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />
+              <ProtectedRoute
+                element={SavedMovies}
+                isLoggedIn={isLoggedIn}
+                isLoading={isLoading}
+              />
             }
           />
 

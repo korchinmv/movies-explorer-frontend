@@ -1,11 +1,9 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [nameDisabled, setNameDisabled] = useState(true);
   const [emailDisabled, setEmailDisabled] = useState(true);
   const [buttonSubmitForm, setButtonSubmitForm] = useState(false);
@@ -16,13 +14,7 @@ export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
     email: currentUser.email,
   });
 
-  useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-  }, [currentUser]);
-
   const handleSubmit = (e) => {
-    console.log("submit");
     e.preventDefault();
     updateUser(form);
   };
@@ -54,7 +46,11 @@ export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
             value={form.name || ""}
             onChange={handleChange}
           />
-          {errors.name && <span className='input-error'>{errors.name}</span>}
+          {errors.name && (
+            <span className='profile__input-error input-error'>
+              {errors.name}
+            </span>
+          )}
         </label>
 
         <label className='profile__label' htmlFor='input-email'>
@@ -72,7 +68,11 @@ export const ProfileForm = ({ logOut, updateUser, errorMessage }) => {
             onChange={handleChange}
             pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           />
-          {errors.email && <span className='input-error'>{errors.email}</span>}
+          {errors.email && (
+            <span className='profile__input-error input-error '>
+              {errors.email}
+            </span>
+          )}
         </label>
 
         <button

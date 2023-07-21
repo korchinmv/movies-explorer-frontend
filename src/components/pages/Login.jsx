@@ -36,7 +36,11 @@ export const Login = ({ loginUser, errorMessage }) => {
           pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           required
         />
-        {errors.email && <span className='input-error'>{errors.email}</span>}
+        {errors.email && (
+          <span className='main-form__input-error input-error'>
+            {errors.email}
+          </span>
+        )}
       </label>
       <label className='main-form__label' htmlFor='password'>
         Пароль
@@ -52,7 +56,9 @@ export const Login = ({ loginUser, errorMessage }) => {
           onChange={handleChange}
           required
         />
-        <span className='input-error'>{errors.password}</span>
+        <span className='main-form__input-error input-error'>
+          {errors.password}
+        </span>
       </label>
     </MainForm>
   );
