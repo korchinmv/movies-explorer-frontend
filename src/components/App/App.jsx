@@ -9,8 +9,8 @@ import { NotFoundPage } from "../pages/NotFoundPage";
 import { Profile } from "../pages/Profile";
 import { Register } from "../pages/Register";
 import { Login } from "../pages/Login";
-import moviesApi from "../../utils/MoviesApi.js";
 import MainApi from "../../utils/MainApi.js";
+import moviesApi from "../../utils/MoviesApi.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 const App = () => {
@@ -24,14 +24,10 @@ const App = () => {
   const [tokenExist, setTokenExist] = useState(true);
   const jwt = localStorage.getItem("jwt");
 
-  // useEffect(() => {
-  //   getMovie();
-  // }, []);
-
+  //получение данных пользователя
   const getUserData = (jwt) => {
     Auth.getUserData(jwt)
       .then((resp) => {
-        console.log(resp);
         setIsLoggedIn(true);
         setCurrentUser(resp);
       })
@@ -42,24 +38,28 @@ const App = () => {
       });
   };
 
+  //получение всех фильмов из Api
+  const getMovie = () => {
+    moviesApi
+      .getMovies()
+      .then((resp) => {
+        localStorage.setItem("movies", JSON.stringify(resp));
+        setMovies(resp);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  //проверка токена, если токен есть получаем данные пользователя и список всех фильмов
   useEffect(() => {
     if (jwt) {
       getUserData(jwt);
+      getMovie();
     } else {
       setTokenExist(false);
     }
   }, [jwt]);
 
-  // const getMovie = () => {
-  //   moviesApi
-  //     .getMovies()
-  //     .then((resp) => {
-  //       localStorage.setItem("movies", JSON.stringify(movies));
-  //       setMovies(resp);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-
+  //регистрация
   const registerUser = (name, password, email) => {
     Auth.registerUser(name, password, email)
       .then((res) => {
@@ -73,12 +73,14 @@ const App = () => {
       });
   };
 
+  //войти в приложение
   const loginUser = (email, password) => {
     Auth.authorizeUser(email, password)
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         setTokenExist(true);
+        getMovie();
         navigate("/movies");
       })
       .catch((err) => {
@@ -89,14 +91,19 @@ const App = () => {
       });
   };
 
+  //выйти из приложения
   const logOut = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("movies");
+    localStorage.removeItem("foundMovies");
+    localStorage.removeItem("inputValue");
+    localStorage.removeItem("checkbox");
     setIsLoggedIn(false);
     setMovies([]);
     navigate("/");
   };
 
+  //обновить данные пользователя
   const updateUser = (form) => {
     setIsLoading(true);
     MainApi.sendUser(form)
@@ -150,6 +157,8 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
                 tokenExist={tokenExist}
+                movies={movies}
+                setMovies={setMovies}
               />
             }
           />

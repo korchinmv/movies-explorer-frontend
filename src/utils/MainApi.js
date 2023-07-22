@@ -1,4 +1,5 @@
 const URL = "https://api.korchinmovies.nomoreparties.sbs/";
+const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
 
 class Api {
   constructor(URL) {
@@ -42,56 +43,41 @@ class Api {
     return promise.then(this._getJson);
   }
 
-  // getCards() {
-  //   const promise = fetch(`${this._URL}cards`, {
-  //     headers: this._getHeaders(),
-  //   });
-  //   return promise.then(this._getJson);
-  // }
+  getSavedMovies() {
+    const promise = fetch(`${this._URL}movies`, {
+      headers: this._getHeaders(),
+    });
+    return promise.then(this._getJson);
+  }
 
-  // sendCard(data) {
-  //   const promise = fetch(`${this._URL}cards`, {
-  //     method: "POST",
-  //     headers: this._getHeaders(),
-  //     body: JSON.stringify({
-  //       name: data.name,
-  //       link: data.link,
-  //     }),
-  //   });
-  //   return promise.then(this._getJson);
-  // }
+  sendMovies(data) {
+    const promise = fetch(`${this._URL}movies`, {
+      method: "POST",
+      headers: this._getHeaders(),
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: `${MOVIES_URL}${data.image.url}`,
+        trailer: data.trailerLink,
+        nameEN: data.nameEN,
+        nameRU: data.nameRU,
+        thumbnail: `${MOVIES_URL}${data.image.formats.thumbnail.url}`,
+        movieId: data.id,
+      }),
+    });
+    return promise.then(this._getJson);
+  }
 
-  // deleteCard(id) {
-  //   const promise = fetch(`${this._URL}cards/${id}`, {
-  //     method: "DELETE",
-  //     headers: this._getHeaders(),
-  //   });
-  //   return promise.then(this._getJson);
-  // }
-
-  // changeLikeCardStatus(id, isLiked) {
-  //   if (isLiked === true) {
-  //     return this.addLike(id);
-  //   } else {
-  //     return this.deleteLike(id);
-  //   }
-  // }
-
-  // addLike(id) {
-  //   const promise = fetch(`${this._URL}cards/${id}/likes`, {
-  //     method: "PUT",
-  //     headers: this._getHeaders(),
-  //   });
-  //   return promise.then(this._getJson);
-  // }
-
-  // deleteLike(id) {
-  //   const promise = fetch(`${this._URL}cards/${id}/likes`, {
-  //     method: "DELETE",
-  //     headers: this._getHeaders(),
-  //   });
-  //   return promise.then(this._getJson);
-  // }
+  deleteMovies(id) {
+    const promise = fetch(`${this._URL}movies/${id}`, {
+      method: "DELETE",
+      headers: this._getHeaders(),
+    });
+    return promise.then(this._getJson);
+  }
 }
 
 const MainApi = new Api(URL);
