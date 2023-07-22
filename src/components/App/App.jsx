@@ -16,7 +16,6 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 const App = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successfulMessage, setSuccessfulMessage] = useState("");
   const [currentUser, setCurrentUser] = useState({});
@@ -44,7 +43,6 @@ const App = () => {
       .getMovies()
       .then((resp) => {
         localStorage.setItem("movies", JSON.stringify(resp));
-        setMovies(resp);
       })
       .catch((err) => console.log(err));
   };
@@ -99,7 +97,6 @@ const App = () => {
     localStorage.removeItem("inputValue");
     localStorage.removeItem("checkbox");
     setIsLoggedIn(false);
-    setMovies([]);
     navigate("/");
   };
 
@@ -124,17 +121,17 @@ const App = () => {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
+      <div className='page'>
         <Routes>
           <Route
             index
-            path="/"
+            path='/'
             element={<Landing isLoggedIn={isLoggedIn} isLoading={isLoading} />}
           />
 
           <Route
             exact
-            path="/profile"
+            path='/profile'
             element={
               <ProtectedRoute
                 element={Profile}
@@ -150,22 +147,20 @@ const App = () => {
 
           <Route
             exact
-            path="/movies"
+            path='/movies'
             element={
               <ProtectedRoute
                 element={Movies}
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
                 tokenExist={tokenExist}
-                movies={movies}
-                setMovies={setMovies}
               />
             }
           />
 
           <Route
             exact
-            path="/saved-movies"
+            path='/saved-movies'
             element={
               <ProtectedRoute
                 element={SavedMovies}
@@ -178,7 +173,7 @@ const App = () => {
 
           <Route
             exact
-            path="/signup"
+            path='/signup'
             element={
               <Register
                 registerUser={registerUser}
@@ -189,13 +184,13 @@ const App = () => {
 
           <Route
             exact
-            path="/signin"
+            path='/signin'
             element={
               <Login loginUser={loginUser} errorMessage={errorMessage} />
             }
           />
 
-          <Route exact path="/*" element={<NotFoundPage />} />
+          <Route exact path='/*' element={<NotFoundPage />} />
         </Routes>
       </div>
     </CurrentUserContext.Provider>

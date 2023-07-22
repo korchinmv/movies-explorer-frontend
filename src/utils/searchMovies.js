@@ -1,17 +1,17 @@
 const searchMovies = (moviesList, inputValue, checkbox, tagSavedMovies) => {
-  const foundMovies = [];
+  if (inputValue === undefined) {
+    return (inputValue = "");
+  }
   inputValue = inputValue.toLowerCase();
-  moviesList.forEach((movie) => {
-    if (
-      checkbox
-        ? movie.nameRU.toLowerCase().includes(inputValue) &
-            (movie.duration < 40) ||
-          movie.nameEN.toLowerCase().includes(inputValue) &
-            (movie.duration < 40)
-        : movie.nameRU.toLowerCase().includes(inputValue) ||
-          movie.nameEN.toLowerCase().includes(inputValue)
-    ) {
-      foundMovies.push(movie);
+
+  const foundMovies = moviesList.filter((movie) => {
+    if (checkbox) {
+      return (
+        movie.description.toLowerCase().includes(inputValue) &
+        (movie.duration < 40)
+      );
+    } else {
+      return movie.description.toLowerCase().includes(inputValue);
     }
   });
   if (!tagSavedMovies) {

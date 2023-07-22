@@ -24,7 +24,9 @@ export const Login = ({ loginUser, errorMessage }) => {
       <label className='main-form__label' htmlFor='email'>
         E-mail{" "}
         <input
-          className='main-form__input'
+          className={`main-form__input ${
+            errors.email ? "main-form__input_error" : ""
+          }`}
           name='email'
           type='email'
           id='email'
@@ -45,7 +47,9 @@ export const Login = ({ loginUser, errorMessage }) => {
       <label className='main-form__label' htmlFor='password'>
         Пароль
         <input
-          className='main-form__input'
+          className={`main-form__input ${
+            errors.password ? "main-form__input_error" : ""
+          }`}
           name='password'
           type='password'
           id='password'

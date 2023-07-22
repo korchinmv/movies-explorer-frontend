@@ -41,9 +41,7 @@ export const Register = ({ registerUser, errorMessage }) => {
           required
         />
         {errors.name && (
-          <span className='main-form__input-error input-error'>
-            {errors.name}
-          </span>
+          <span className='main-form__input-error'>{errors.name}</span>
         )}
       </label>
       <label className='main-form__label' htmlFor='email'>
