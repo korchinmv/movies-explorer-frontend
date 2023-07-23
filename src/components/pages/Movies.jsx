@@ -4,7 +4,6 @@ import { Main } from "../Main/Main";
 import { SearchForm } from "../elements/SearchForm/SearchForm";
 import { MoviesCardList } from "../MoviesCardList/MoviesCardList";
 import { Footer } from "../Footer/Footer";
-import { Preloader } from "../Preloader/Preloader";
 import searchMovies from "../../utils/searchMovies";
 
 export const Movies = ({ isLoggedIn }) => {

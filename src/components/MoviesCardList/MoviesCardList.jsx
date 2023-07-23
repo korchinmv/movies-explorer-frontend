@@ -1,5 +1,6 @@
 import { MoviesCard } from "../MoviesCard/MoviesCard";
 import { Preloader } from "../Preloader/Preloader";
+import { MoreButton } from "../UI/MoreButton/MoreButton";
 
 export const MoviesCardList = ({
   movies,
@@ -7,17 +8,19 @@ export const MoviesCardList = ({
   searchError,
   loading,
 }) => {
+  const isSavedMoviesPage = window.location.pathname === "/saved-movies";
+
   return (
-    <section className='movies-cards'>
-      <div className='container'>
+    <section className="movies-cards">
+      <div className="container">
         {loading ? (
           <Preloader />
         ) : unsuccessfulSearch !== "" ? (
-          <p className='movies-cards__message'>{unsuccessfulSearch}</p>
+          <p className="movies-cards__message">{unsuccessfulSearch}</p>
         ) : searchError !== "" ? (
-          <p className='movies-cards__message'>{searchError}</p>
+          <p className="movies-cards__message">{searchError}</p>
         ) : movies.length !== 0 ? (
-          <ul className='movies-cards__list'>
+          <ul className="movies-cards__list">
             {movies.map((movie) => {
               return <MoviesCard movie={movie} key={movie.id} />;
             })}
@@ -26,16 +29,7 @@ export const MoviesCardList = ({
           ""
         )}
 
-        {movies.length > 2 ? (
-          <button
-            className='movies-cards__more hover-link'
-            aria-label='Добавить больше фильмов на страницу'
-          >
-            Ещё
-          </button>
-        ) : (
-          ""
-        )}
+        {!isSavedMoviesPage ? movies.length > 2 ? <MoreButton /> : "" : ""}
       </div>
     </section>
   );

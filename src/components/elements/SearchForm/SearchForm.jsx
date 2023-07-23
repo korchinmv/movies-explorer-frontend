@@ -40,28 +40,28 @@ export const SearchForm = ({
   };
 
   return (
-    <div className='search'>
-      <div className='container container_movies-mobile'>
-        <div className='search__wrapper'>
-          <form className='search__form' action='#' onSubmit={handleSubmit}>
-            <div className='search__inner'>
+    <div className="search">
+      <div className="container container_movies-mobile">
+        <div className="search__wrapper">
+          <form className="search__form" action="#" onSubmit={handleSubmit}>
+            <div className="search__inner">
               <input
-                className='search__input'
-                type='text'
-                name='search'
+                className="search__input"
+                type="text"
+                name="search"
                 required
-                placeholder='Фильм'
+                placeholder="Фильм"
                 minLength={2}
                 maxLength={90}
                 value={form.search || ""}
                 onChange={handleChange}
               />
               <button
-                className='search__button hover-link'
-                aria-label='Поиск фильма'
-                type='submit'
+                className="search__button hover-link"
+                aria-label="Поиск фильма"
+                type="submit"
               >
-                <img className='search__arrow' src={logo} alt='Стрелка' />
+                <img className="search__arrow" src={logo} alt="Стрелка" />
               </button>
               <SwitchToggle
                 name={"Короткометражки"}
@@ -75,7 +75,7 @@ export const SearchForm = ({
             />
 
             {showHint && (
-              <p className='search__error'>Нужно ввести ключевое слово</p>
+              <p className="search__error">Нужно ввести ключевое слово</p>
             )}
           </form>
         </div>
