@@ -8,9 +8,29 @@ import searchMovies from "../../utils/searchMovies";
 
 export const Movies = ({ isLoggedIn, apiMoviesList }) => {
   const [movies, setMovies] = useState([]);
+  const [inputSearchForm, setInputSearchForm] = useState("");
+  const [checkboxValue, setCheckboxValue] = useState(true);
   const [loading, setLoading] = useState(false);
   const [unsuccessfulSearch, setUnsuccessfulSearch] = useState("");
   const [searchError, setSearchError] = useState("");
+
+  useEffect(() => {
+    const localInputSearch = localStorage.getItem("inputValue");
+    const localCheckboxValue = localStorage.getItem("checkboxValue");
+    const localResultSearchMovies = localStorage.getItem("foundMovies");
+
+    if (localInputSearch) {
+      setInputSearchForm(JSON.parse(localInputSearch));
+    }
+
+    if (localCheckboxValue) {
+      setCheckboxValue(JSON.parse(localCheckboxValue));
+    }
+
+    if (localResultSearchMovies) {
+      setMovies(JSON.parse(localResultSearchMovies));
+    }
+  }, []);
 
   const timeout = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -39,24 +59,17 @@ export const Movies = ({ isLoggedIn, apiMoviesList }) => {
     setLoading(false);
   };
 
-  const resetMovies = () => {
-    setMovies([]);
-  };
-
-  // useEffect(() => {
-  //   if (searchedMovies.length !== 0) {
-  //     setMovies(searchedMovies);
-  //   }
-  // }, []);
-
   return (
     <>
       <Header isLoggedIn={isLoggedIn} color={"header_main"} />
       <Main>
         <SearchForm
           handleSearchMovies={handleSearchMovies}
-          resetMovies={resetMovies}
           unsuccessfulSearch={unsuccessfulSearch}
+          inputSearchForm={inputSearchForm}
+          setInputSearchForm={setInputSearchForm}
+          checkboxValue={checkboxValue}
+          setCheckboxValue={setCheckboxValue}
         />
 
         <MoviesCardList

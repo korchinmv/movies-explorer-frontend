@@ -101,7 +101,7 @@ const App = () => {
     localStorage.removeItem("movies");
     localStorage.removeItem("foundMovies");
     localStorage.removeItem("inputValue");
-    localStorage.removeItem("checkbox");
+    localStorage.removeItem("checkboxValue");
     setIsLoggedIn(false);
     navigate("/");
   };
@@ -132,17 +132,17 @@ const App = () => {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
+      <div className='page'>
         <Routes>
           <Route
             index
-            path="/"
+            path='/'
             element={<Landing isLoggedIn={isLoggedIn} isLoading={isLoading} />}
           />
 
           <Route
             exact
-            path="/profile"
+            path='/profile'
             element={
               <ProtectedRoute
                 element={Profile}
@@ -158,7 +158,7 @@ const App = () => {
 
           <Route
             exact
-            path="/movies"
+            path='/movies'
             element={
               <ProtectedRoute
                 element={Movies}
@@ -172,7 +172,7 @@ const App = () => {
 
           <Route
             exact
-            path="/saved-movies"
+            path='/saved-movies'
             element={
               <ProtectedRoute
                 element={SavedMovies}
@@ -185,7 +185,7 @@ const App = () => {
 
           <Route
             exact
-            path="/signup"
+            path='/signup'
             element={
               <ProtectedRouteForLoggedIn
                 element={Register}
@@ -200,7 +200,7 @@ const App = () => {
 
           <Route
             exact
-            path="/signin"
+            path='/signin'
             element={
               <ProtectedRouteForLoggedIn
                 element={Login}
@@ -213,7 +213,7 @@ const App = () => {
             }
           />
 
-          <Route exact path="/*" element={<NotFoundPage />} />
+          <Route exact path='/*' element={<NotFoundPage />} />
         </Routes>
       </div>
     </CurrentUserContext.Provider>

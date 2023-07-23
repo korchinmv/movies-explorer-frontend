@@ -1,4 +1,4 @@
-const searchMovies = (moviesList, inputValue, checkbox, tagSavedMovies) => {
+const searchMovies = (moviesList, inputValue, checkbox) => {
   if (inputValue === undefined) {
     return (inputValue = "");
   }
@@ -14,11 +14,11 @@ const searchMovies = (moviesList, inputValue, checkbox, tagSavedMovies) => {
       return movie.description.toLowerCase().includes(inputValue);
     }
   });
-  if (!tagSavedMovies) {
-    localStorage.setItem("foundMovies", JSON.stringify(foundMovies));
-    localStorage.setItem("inputValue", JSON.stringify(inputValue));
-    localStorage.setItem("checkbox", JSON.stringify(checkbox));
-  }
+
+  localStorage.setItem("foundMovies", JSON.stringify(foundMovies));
+  localStorage.setItem("inputValue", JSON.stringify(inputValue));
+  localStorage.setItem("checkboxValue", JSON.stringify(checkbox));
+
   return foundMovies;
 };
 

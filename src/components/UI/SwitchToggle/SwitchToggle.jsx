@@ -1,17 +1,22 @@
-export const SwitchToggle = ({ position, name, handleCheckbox, checkbox }) => {
+export const SwitchToggle = ({
+  position,
+  name,
+  handleCheckbox,
+  checkboxValue,
+}) => {
   return (
     <div className={`${position} switch-toggle`}>
-      <label className="switch-toggle__label hover-link" htmlFor="checkbox">
+      <label className='switch-toggle__label hover-link' htmlFor='checkbox'>
         <input
-          className="switch-toggle__input"
-          type="checkbox"
-          id="checkbox"
+          className='switch-toggle__input'
+          type='checkbox'
+          id='checkbox'
           onChange={handleCheckbox}
-          checked={checkbox}
+          checked={checkboxValue}
         />
-        <span className="switch-toggle__slider"></span>
+        <span className='switch-toggle__slider'></span>
       </label>
-      <p className="switch-toggle__name">{name}</p>
+      <p className='switch-toggle__name'>{name}</p>
     </div>
   );
 };

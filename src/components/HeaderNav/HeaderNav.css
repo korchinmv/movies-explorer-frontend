@@ -3,6 +3,10 @@
   font-weight: 400;
 }
 
+.header__movie-link.active::after {
+  display: none;
+}
+
 .header__movie-link.active {
   font-weight: 500;
 }
