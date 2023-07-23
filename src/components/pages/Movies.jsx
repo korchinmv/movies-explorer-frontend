@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import { Main } from "../Main/Main";
 import { SearchForm } from "../elements/SearchForm/SearchForm";
@@ -6,12 +6,11 @@ import { MoviesCardList } from "../MoviesCardList/MoviesCardList";
 import { Footer } from "../Footer/Footer";
 import searchMovies from "../../utils/searchMovies";
 
-export const Movies = ({ isLoggedIn }) => {
+export const Movies = ({ isLoggedIn, apiMoviesList }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [unsuccessfulSearch, setUnsuccessfulSearch] = useState("");
   const [searchError, setSearchError] = useState("");
-  const moviesApi = localStorage.getItem("movies");
 
   const timeout = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -21,20 +20,16 @@ export const Movies = ({ isLoggedIn }) => {
     setLoading(true);
     await timeout(1500);
     try {
-      const findedMovies = await searchMovies(
-        JSON.parse(moviesApi),
-        inputValue,
-        checkbox
-      );
+      const result = await searchMovies(apiMoviesList, inputValue, checkbox);
 
-      if (findedMovies.length === 0) {
+      if (result.length === 0) {
         setUnsuccessfulSearch("Ничего не найдено");
       } else {
         setUnsuccessfulSearch("");
       }
 
       setLoading(false);
-      setMovies(findedMovies);
+      setMovies(result);
     } catch (err) {
       console.log(err);
       setSearchError(
@@ -47,6 +42,12 @@ export const Movies = ({ isLoggedIn }) => {
   const resetMovies = () => {
     setMovies([]);
   };
+
+  // useEffect(() => {
+  //   if (searchedMovies.length !== 0) {
+  //     setMovies(searchedMovies);
+  //   }
+  // }, []);
 
   return (
     <>

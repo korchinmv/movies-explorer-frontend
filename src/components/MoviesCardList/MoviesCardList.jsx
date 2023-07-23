@@ -29,7 +29,11 @@ export const MoviesCardList = ({
           ""
         )}
 
-        {!isSavedMoviesPage ? movies.length > 2 ? <MoreButton /> : "" : ""}
+        {!loading && !isSavedMoviesPage && movies.length > 2 ? (
+          <MoreButton />
+        ) : (
+          ""
+        )}
       </div>
     </section>
   );

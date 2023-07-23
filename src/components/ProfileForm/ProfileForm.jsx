@@ -6,7 +6,7 @@ export const ProfileForm = ({
   logOut,
   updateUser,
   errorMessage,
-  successfulMessage,
+  profileChanged,
 }) => {
   const currentUser = useContext(CurrentUserContext);
   const [nameDisabled, setNameDisabled] = useState(true);
@@ -14,6 +14,7 @@ export const ProfileForm = ({
   const [buttonSubmitForm, setButtonSubmitForm] = useState(false);
   const [buttonEditForm, setButtonEditForm] = useState(true);
   const [buttonLogout, setbuttonLogout] = useState(true);
+
   const { form, handleChange, errors, isValid } = useForm({
     name: currentUser.name,
     email: currentUser.email,
@@ -80,10 +81,8 @@ export const ProfileForm = ({
           )}
         </label>
 
-        {successfulMessage !== "" ? (
-          <div className="profile__message">{successfulMessage}</div>
-        ) : (
-          ""
+        {profileChanged && (
+          <div className="profile__message">Данные успешно изменены!</div>
         )}
 
         <button

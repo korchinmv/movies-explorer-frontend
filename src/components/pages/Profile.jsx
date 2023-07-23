@@ -3,14 +3,24 @@ import { Main } from "../Main/Main";
 import { Preloader } from "../Preloader/Preloader";
 import { ProfileForm } from "../ProfileForm/ProfileForm";
 
-export const Profile = ({ logOut, isLoggedIn, updateUser, isLoading }) => {
+export const Profile = ({
+  logOut,
+  isLoggedIn,
+  updateUser,
+  isLoading,
+  profileChanged,
+}) => {
   return isLoading ? (
     <Preloader />
   ) : (
     <>
       <Header isLoggedIn={isLoggedIn} color={"header_main"} />
       <Main>
-        <ProfileForm logOut={logOut} updateUser={updateUser} />
+        <ProfileForm
+          logOut={logOut}
+          updateUser={updateUser}
+          profileChanged={profileChanged}
+        />
       </Main>
     </>
   );

@@ -21,6 +21,10 @@
   width: 100%;
 }
 
+.profile__message {
+  margin-bottom: 30px;
+}
+
 .profile__label {
   display: flex;
   align-items: center;

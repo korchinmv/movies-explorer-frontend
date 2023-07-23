@@ -18,13 +18,15 @@ const App = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [successfulMessage, setSuccessfulMessage] = useState("");
+  const [profileChanged, setProfileChanged] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [tokenExist, setTokenExist] = useState(true);
+  const [apiMoviesList, setApiMoviesList] = useState([]);
   const jwt = localStorage.getItem("jwt");
   const isLoginPage = window.location.pathname === "/signin";
   const isSignupPage = window.location.pathname === "/signup";
+  const isProfilePage = window.location.pathname === "/profile";
 
   //получение данных пользователя
   const getUserData = (jwt) => {
@@ -45,6 +47,7 @@ const App = () => {
     moviesApi
       .getMovies()
       .then((resp) => {
+        setApiMoviesList(resp);
         localStorage.setItem("movies", JSON.stringify(resp));
       })
       .catch((err) => console.log(err));
@@ -109,7 +112,7 @@ const App = () => {
     MainApi.sendUser(form)
       .then((resp) => {
         setCurrentUser(resp);
-        setSuccessfulMessage("Данные успешно обновились");
+        setProfileChanged(true);
       })
       .catch((err) => {
         console.log(err);
@@ -121,6 +124,11 @@ const App = () => {
         setIsLoading(false);
       });
   };
+
+  //скрываем уведомление о смене данных пользователя
+  useEffect(() => {
+    setProfileChanged(false);
+  }, [isProfilePage]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -139,11 +147,11 @@ const App = () => {
               <ProtectedRoute
                 element={Profile}
                 logOut={logOut}
-                isLoggedIn={isLoggedIn}
                 updateUser={updateUser}
                 isLoading={isLoading}
+                isLoggedIn={isLoggedIn}
                 tokenExist={tokenExist}
-                successfulMessage={successfulMessage}
+                profileChanged={profileChanged}
               />
             }
           />
@@ -157,6 +165,7 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
                 tokenExist={tokenExist}
+                apiMoviesList={apiMoviesList}
               />
             }
           />
