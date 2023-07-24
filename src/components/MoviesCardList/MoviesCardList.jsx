@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
 import { Preloader } from "../Preloader/Preloader";
 import { MoreButton } from "../UI/MoreButton/MoreButton";
@@ -9,6 +10,34 @@ export const MoviesCardList = ({
   loading,
 }) => {
   const isSavedMoviesPage = window.location.pathname === "/saved-movies";
+  const [shownMovies, setShownMovies] = useState(0);
+  const [displayWidth, setdisplayWidth] = useState(window.innerWidth);
+
+  function shownCount() {
+    if (displayWidth >= 768) {
+      setShownMovies(12);
+    } else if (displayWidth < 768) {
+      setShownMovies(5);
+    }
+  }
+
+  function showMore() {
+    if (displayWidth >= 768) {
+      setShownMovies(shownMovies + 3);
+    } else if (displayWidth < 768) {
+      setShownMovies(shownMovies + 2);
+    }
+  }
+
+  useEffect(() => {
+    shownCount();
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.addEventListener("resize", setdisplayWidth(window.innerWidth));
+    }, 500);
+  });
 
   return (
     <section className='movies-cards'>
@@ -30,7 +59,7 @@ export const MoviesCardList = ({
         )}
 
         {!loading && !isSavedMoviesPage && movies.length > 2 ? (
-          <MoreButton />
+          <MoreButton onClick={showMore} />
         ) : (
           ""
         )}

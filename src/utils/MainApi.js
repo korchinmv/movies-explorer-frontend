@@ -2,8 +2,9 @@ const URL = "https://api.korchinmovies.nomoreparties.sbs/";
 const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
 
 class Api {
-  constructor(URL) {
+  constructor(URL, MOVIES_URL) {
     this._URL = URL;
+    this._MOVIES_URL = MOVIES_URL;
   }
 
   _getToken() {
@@ -60,12 +61,13 @@ class Api {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: `${MOVIES_URL}${data.image.url}`,
-        trailer: data.trailerLink,
+        image: data.image,
+        trailerLink: data.trailerLink,
         nameEN: data.nameEN,
         nameRU: data.nameRU,
-        thumbnail: `${MOVIES_URL}${data.image.formats.thumbnail.url}`,
+        thumbnail: data.thumbnail,
         movieId: data.id,
+        owner: data.owner,
       }),
     });
     return promise.then(this._getJson);
@@ -80,5 +82,5 @@ class Api {
   }
 }
 
-const MainApi = new Api(URL);
+const MainApi = new Api(URL, MOVIES_URL);
 export default MainApi;
