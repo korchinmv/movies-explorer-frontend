@@ -13,6 +13,7 @@ export const MoviesCardList = ({
   deleteMovie,
 }) => {
   const isSavedMoviesPage = window.location.pathname === "/saved-movies";
+  const isMoviesPage = window.location.pathname === "/movies";
   const [showMovies, setShowMovies] = useState(0);
   const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
 
@@ -57,16 +58,18 @@ export const MoviesCardList = ({
           <p className='movies-cards__message'>{searchError}</p>
         ) : movies.length !== 0 ? (
           <ul className='movies-cards__list'>
-            {movies.slice(0, showMovies).map((movie) => {
-              return (
-                <MoviesCard
-                  movie={movie}
-                  key={movie.id}
-                  savedMoviesList={savedMoviesList}
-                  saveMovie={saveMovie}
-                  deleteMovie={deleteMovie}
-                />
-              );
+            {movies.map((movie, index) => {
+              if (index < showMovies) {
+                return (
+                  <MoviesCard
+                    movie={movie}
+                    key={movie.id || movie._id}
+                    savedMoviesList={savedMoviesList}
+                    saveMovie={saveMovie}
+                    deleteMovie={deleteMovie}
+                  />
+                );
+              }
             })}
           </ul>
         ) : (

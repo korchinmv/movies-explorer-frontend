@@ -199,6 +199,7 @@ const App = () => {
                 isLoading={isLoading}
                 tokenExist={tokenExist}
                 savedMoviesList={savedMoviesList}
+                deleteMovie={deleteMovie}
               />
             }
           />

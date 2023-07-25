@@ -12,8 +12,6 @@ export const Movies = ({
   savedMoviesList,
   saveMovie,
   deleteMovie,
-  isSavedMoviesPage,
-  isMoviesPage,
 }) => {
   const [movies, setMovies] = useState([]);
   const [inputSearchForm, setInputSearchForm] = useState("");
@@ -82,7 +80,6 @@ export const Movies = ({
 
         <MoviesCardList
           movies={movies}
-          setMovies={setMovies}
           unsuccessfulSearch={unsuccessfulSearch}
           searchError={searchError}
           loading={loading}
