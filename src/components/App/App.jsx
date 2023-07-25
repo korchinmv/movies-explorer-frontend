@@ -23,45 +23,60 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [tokenExist, setTokenExist] = useState(true);
   const [apiMoviesList, setApiMoviesList] = useState([]);
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
   const jwt = localStorage.getItem("jwt");
   const isLoginPage = window.location.pathname === "/signin";
   const isSignupPage = window.location.pathname === "/signup";
   const isProfilePage = window.location.pathname === "/profile";
-
-  //получение данных пользователя
-  const getUserData = (jwt) => {
-    Auth.getUserData(jwt)
-      .then((resp) => {
-        setIsLoggedIn(true);
-        setCurrentUser(resp);
-      })
-      .catch((err) => {
-        localStorage.removeItem("jwt");
-        setTokenExist(false);
-        console.log(err);
-      });
-  };
-
-  //получение всех фильмов из Api
-  const getMovie = () => {
-    moviesApi
-      .getMovies()
-      .then((resp) => {
-        setApiMoviesList(resp);
-        localStorage.setItem("movies", JSON.stringify(resp));
-      })
-      .catch((err) => console.log(err));
-  };
+  const isSavedMoviesPage = window.location.pathname === "/saved-movies";
+  const isMoviesPage = window.location.pathname === "/movies";
 
   //проверка токена, если токен есть получаем данные пользователя и список всех фильмов
   useEffect(() => {
     if (jwt) {
-      getUserData(jwt);
-      getMovie();
+      Promise.all([
+        Auth.getUserData(jwt),
+        moviesApi.getMovies(),
+        MainApi.getSavedMovies(),
+      ])
+        .then(([userData, apiMovies, savedMovies]) => {
+          setIsLoggedIn(true);
+          setCurrentUser(userData);
+          setApiMoviesList(apiMovies);
+          setSavedMoviesList(savedMovies);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } else {
       setTokenExist(false);
     }
   }, [jwt]);
+
+  //сохранить фильм в избранное
+  const saveMovie = (movieData, email) => {
+    MainApi.sendMovies(movieData, email)
+      .then((likedMovie) => {
+        setSavedMoviesList([likedMovie.data, ...savedMoviesList]);
+        console.log("Карточка создана:", likedMovie.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // удаление фильма из избранного
+  const deleteMovie = (id) => {
+    MainApi.deleteMovies(id)
+      .then(() => {
+        setSavedMoviesList((savedMovies) =>
+          savedMovies.filter((c) => c._id !== id)
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   //регистрация
   const registerUser = (name, password, email) => {
@@ -84,7 +99,6 @@ const App = () => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         setTokenExist(true);
-        getMovie();
         navigate("/movies");
       })
       .catch((err) => {
@@ -166,6 +180,11 @@ const App = () => {
                 isLoading={isLoading}
                 tokenExist={tokenExist}
                 apiMoviesList={apiMoviesList}
+                savedMoviesList={savedMoviesList}
+                saveMovie={saveMovie}
+                deleteMovie={deleteMovie}
+                isSavedMoviesPage={isSavedMoviesPage}
+                isMoviesPage={isMoviesPage}
               />
             }
           />
@@ -179,6 +198,7 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 isLoading={isLoading}
                 tokenExist={tokenExist}
+                savedMoviesList={savedMoviesList}
               />
             }
           />

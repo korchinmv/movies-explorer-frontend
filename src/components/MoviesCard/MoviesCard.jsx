@@ -1,8 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
-export const MoviesCard = ({ movie }) => {
-  const [savedMovie, setSavedMovie] = useState(false);
-  const isLiked = false;
+export const MoviesCard = ({
+  movie,
+  savedMoviesList,
+  saveMovie,
+  deleteMovie,
+}) => {
+  const currentUser = useContext(CurrentUserContext);
+  const [savedMovie, setSavedMovie] = useState();
+  const [isLiked, setIsLiked] = useState(false);
+  const isSavedMoviesPage = window.location.pathname === "/saved-movies";
+
+  //проверка наличия сохраненных фильмов
+  useEffect(() => {
+    if (savedMoviesList) {
+      savedMoviesList.forEach((savedMovie) => {
+        if (savedMovie.movieId === movie.id) {
+          setIsLiked(true);
+          setSavedMovie(savedMovie._id);
+        }
+      });
+    }
+  }, [savedMoviesList]);
+
+  const handleSaveOrDeleteMovie = () => {
+    if (!isLiked) {
+      saveMovie(movie, currentUser.email);
+      setIsLiked(true);
+    } else {
+      deleteMovie(savedMovie);
+      setIsLiked(false);
+    }
+  };
 
   const timeЕranslation = () => {
     const totalMinutes = movie.duration;
@@ -23,9 +53,12 @@ export const MoviesCard = ({ movie }) => {
         </div>
         <button
           className={`movies-cards__favourite ${
-            isLiked && "movies-cards__favourite_active"
-          } ${savedMovie && "movies-cards__favourite_saved"} hover-link`}
+            isLiked ? "movies-cards__favourite_active" : ""
+          } ${
+            isSavedMoviesPage ? "movies-cards__favourite_saved" : ""
+          }  hover-link`}
           aria-label='Добавить фильм в избранное'
+          onClick={handleSaveOrDeleteMovie}
         ></button>
       </div>
       <a

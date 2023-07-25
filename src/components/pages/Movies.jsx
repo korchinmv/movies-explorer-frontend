@@ -6,10 +6,18 @@ import { MoviesCardList } from "../MoviesCardList/MoviesCardList";
 import { Footer } from "../Footer/Footer";
 import searchMovies from "../../utils/searchMovies";
 
-export const Movies = ({ isLoggedIn, apiMoviesList }) => {
+export const Movies = ({
+  isLoggedIn,
+  apiMoviesList,
+  savedMoviesList,
+  saveMovie,
+  deleteMovie,
+  isSavedMoviesPage,
+  isMoviesPage,
+}) => {
   const [movies, setMovies] = useState([]);
   const [inputSearchForm, setInputSearchForm] = useState("");
-  const [checkboxValue, setCheckboxValue] = useState(true);
+  const [checkboxValue, setCheckboxValue] = useState(false);
   const [loading, setLoading] = useState(false);
   const [unsuccessfulSearch, setUnsuccessfulSearch] = useState("");
   const [searchError, setSearchError] = useState("");
@@ -78,6 +86,9 @@ export const Movies = ({ isLoggedIn, apiMoviesList }) => {
           unsuccessfulSearch={unsuccessfulSearch}
           searchError={searchError}
           loading={loading}
+          savedMoviesList={savedMoviesList}
+          saveMovie={saveMovie}
+          deleteMovie={deleteMovie}
         />
       </Main>
 

@@ -8,6 +8,9 @@ export const MoviesCardList = ({
   unsuccessfulSearch,
   searchError,
   loading,
+  savedMoviesList,
+  saveMovie,
+  deleteMovie,
 }) => {
   const isSavedMoviesPage = window.location.pathname === "/saved-movies";
   const [showMovies, setShowMovies] = useState(0);
@@ -44,18 +47,26 @@ export const MoviesCardList = ({
   });
 
   return (
-    <section className="movies-cards">
-      <div className="container">
+    <section className='movies-cards'>
+      <div className='container'>
         {loading ? (
           <Preloader />
         ) : unsuccessfulSearch !== "" ? (
-          <p className="movies-cards__message">{unsuccessfulSearch}</p>
+          <p className='movies-cards__message'>{unsuccessfulSearch}</p>
         ) : searchError !== "" ? (
-          <p className="movies-cards__message">{searchError}</p>
+          <p className='movies-cards__message'>{searchError}</p>
         ) : movies.length !== 0 ? (
-          <ul className="movies-cards__list">
+          <ul className='movies-cards__list'>
             {movies.slice(0, showMovies).map((movie) => {
-              return <MoviesCard movie={movie} key={movie.id} />;
+              return (
+                <MoviesCard
+                  movie={movie}
+                  key={movie.id}
+                  savedMoviesList={savedMoviesList}
+                  saveMovie={saveMovie}
+                  deleteMovie={deleteMovie}
+                />
+              );
             })}
           </ul>
         ) : (
@@ -66,7 +77,7 @@ export const MoviesCardList = ({
         !isSavedMoviesPage &&
         movies.length > 2 &&
         movies.length > showMovies ? (
-          <MoreButton showMore={showMore} />
+          <MoreButton showMore={showMore} savedMoviesList={savedMoviesList} />
         ) : (
           ""
         )}

@@ -51,7 +51,7 @@ class Api {
     return promise.then(this._getJson);
   }
 
-  sendMovies(data) {
+  sendMovies(data, email) {
     const promise = fetch(`${this._URL}movies`, {
       method: "POST",
       headers: this._getHeaders(),
@@ -61,13 +61,13 @@ class Api {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: data.image,
+        image: `${MOVIES_URL}data.image.url`,
         trailerLink: data.trailerLink,
         nameEN: data.nameEN,
         nameRU: data.nameRU,
-        thumbnail: data.thumbnail,
+        thumbnail: `${MOVIES_URL}data.image.formats.thumbnail.url`,
         movieId: data.id,
-        owner: data.owner,
+        owner: email,
       }),
     });
     return promise.then(this._getJson);

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import logo from "../../../images/arrow-right.svg";
+import arrow from "../../../images/arrow-right.svg";
 import { SwitchToggle } from "../../UI/SwitchToggle/SwitchToggle";
 import { SwitchToggleMobile } from "../../UI/SwitchToggle/SwitchToggleMobile/SwitchToggleMobile";
 
@@ -49,7 +48,7 @@ export const SearchForm = ({
                 aria-label='Поиск фильма'
                 type='submit'
               >
-                <img className='search__arrow' src={logo} alt='Стрелка' />
+                <img className='search__arrow' src={arrow} alt='Стрелка' />
               </button>
               <SwitchToggle
                 name={"Короткометражки"}
