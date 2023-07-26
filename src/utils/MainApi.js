@@ -1,5 +1,6 @@
 const URL = "https://api.korchinmovies.nomoreparties.sbs/";
 const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
+const MOVIES_IMAGE_URL = "https://api.nomoreparties.co";
 
 class Api {
   constructor(URL, MOVIES_URL) {
@@ -61,7 +62,7 @@ class Api {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: `${MOVIES_URL}data.image.url`,
+        image: `${MOVIES_IMAGE_URL}${data.image.url}`,
         trailerLink: data.trailerLink,
         nameEN: data.nameEN,
         nameRU: data.nameRU,

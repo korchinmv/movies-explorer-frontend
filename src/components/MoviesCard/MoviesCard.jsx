@@ -25,12 +25,16 @@ export const MoviesCard = ({
   }, [savedMoviesList]);
 
   const handleSaveOrDeleteMovie = () => {
-    if (!isLiked) {
-      saveMovie(movie, currentUser.email);
-      setIsLiked(true);
+    if (isSavedMoviesPage) {
+      deleteMovie(movie._id);
     } else {
-      deleteMovie(savedMovie);
-      setIsLiked(false);
+      if (!isLiked) {
+        saveMovie(movie, currentUser.email);
+        setIsLiked(true);
+      } else {
+        deleteMovie(savedMovie);
+        setIsLiked(false);
+      }
     }
   };
 
@@ -69,7 +73,11 @@ export const MoviesCard = ({
       >
         <img
           className='movies-cards__image'
-          src={`https://api.nomoreparties.co/${movie.image.url}`}
+          src={
+            isSavedMoviesPage
+              ? movie.image
+              : `https://api.nomoreparties.co${movie.image.url}`
+          }
           alt='Изображение фильма'
         />
       </a>

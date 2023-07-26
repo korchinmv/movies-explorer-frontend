@@ -57,8 +57,7 @@ const App = () => {
   const saveMovie = (movieData, email) => {
     MainApi.sendMovies(movieData, email)
       .then((likedMovie) => {
-        setSavedMoviesList([likedMovie.data, ...savedMoviesList]);
-        console.log("Карточка создана:", likedMovie.data);
+        setSavedMoviesList([likedMovie.data, ...savedMoviesList].reverse());
       })
       .catch((error) => {
         console.log(error);

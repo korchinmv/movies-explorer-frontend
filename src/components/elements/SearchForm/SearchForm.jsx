@@ -1,3 +1,4 @@
+import { useState } from "react";
 import arrow from "../../../images/arrow-right.svg";
 import { SwitchToggle } from "../../UI/SwitchToggle/SwitchToggle";
 import { SwitchToggleMobile } from "../../UI/SwitchToggle/SwitchToggleMobile/SwitchToggleMobile";
@@ -8,22 +9,39 @@ export const SearchForm = ({
   setInputSearchForm,
   checkboxValue,
   setCheckboxValue,
+  filterSavedMovies,
 }) => {
+  const [inputText, seInputText] = useState("");
+  const [checkboxShortMovies, setCheckboxShortMovies] = useState(false);
+  const isSavedMoviesPage = window.location.pathname === "/saved-movies";
+
   // сабмит формы поиска
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleSearchMovies(inputSearchForm, checkboxValue);
+    if (isSavedMoviesPage) {
+      filterSavedMovies(inputText, checkboxShortMovies);
+    } else {
+      handleSearchMovies(inputSearchForm, checkboxValue);
+    }
   };
 
   //контролируемый инпут
   const handleInputChange = (e) => {
-    setInputSearchForm(e.target.value);
+    if (isSavedMoviesPage) {
+      seInputText(e.target.value);
+    } else {
+      setInputSearchForm(e.target.value);
+    }
   };
 
   // переключатель состояния checkbox
   const handleCheckbox = (e) => {
-    setCheckboxValue(e.target.checked);
-    handleSearchMovies(inputSearchForm, e.target.checked);
+    if (isSavedMoviesPage) {
+      setCheckboxShortMovies(e.target.checked);
+    } else {
+      setCheckboxValue(e.target.checked);
+      handleSearchMovies(inputSearchForm, e.target.checked);
+    }
   };
 
   return (

@@ -50,7 +50,7 @@ export const MoviesCardList = ({
   return (
     <section className='movies-cards'>
       <div className='container'>
-        {loading ? (
+        {isMoviesPage && loading ? (
           <Preloader />
         ) : unsuccessfulSearch !== "" ? (
           <p className='movies-cards__message'>{unsuccessfulSearch}</p>
@@ -70,6 +70,24 @@ export const MoviesCardList = ({
                   />
                 );
               }
+            })}
+          </ul>
+        ) : (
+          ""
+        )}
+
+        {isSavedMoviesPage && movies.length !== 0 ? (
+          <ul className='movies-cards__list'>
+            {movies.reverse().map((movie) => {
+              return (
+                <MoviesCard
+                  movie={movie}
+                  key={movie.id || movie._id}
+                  savedMoviesList={savedMoviesList}
+                  saveMovie={saveMovie}
+                  deleteMovie={deleteMovie}
+                />
+              );
             })}
           </ul>
         ) : (
