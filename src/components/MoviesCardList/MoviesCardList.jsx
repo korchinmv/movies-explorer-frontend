@@ -48,16 +48,16 @@ export const MoviesCardList = ({
   });
 
   return (
-    <section className='movies-cards'>
-      <div className='container'>
+    <section className="movies-cards">
+      <div className="container">
         {isMoviesPage && loading ? (
           <Preloader />
-        ) : unsuccessfulSearch !== "" ? (
-          <p className='movies-cards__message'>{unsuccessfulSearch}</p>
+        ) : unsuccessfulSearch !== "" && movies.length === 0 ? (
+          <p className="movies-cards__message">{unsuccessfulSearch}</p>
         ) : searchError !== "" ? (
-          <p className='movies-cards__message'>{searchError}</p>
-        ) : movies.length !== 0 ? (
-          <ul className='movies-cards__list'>
+          <p className="movies-cards__message">{searchError}</p>
+        ) : isMoviesPage && movies.length !== 0 ? (
+          <ul className="movies-cards__list">
             {movies.map((movie, index) => {
               if (index < showMovies) {
                 return (
@@ -76,8 +76,10 @@ export const MoviesCardList = ({
           ""
         )}
 
-        {isSavedMoviesPage && movies.length !== 0 ? (
-          <ul className='movies-cards__list'>
+        {isSavedMoviesPage && loading ? (
+          <Preloader />
+        ) : isSavedMoviesPage && movies.length !== 0 ? (
+          <ul className="movies-cards__list">
             {movies.reverse().map((movie) => {
               return (
                 <MoviesCard

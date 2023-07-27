@@ -7,7 +7,9 @@ import { useState, useEffect } from "react";
 
 export const SavedMovies = ({ isLoggedIn, savedMoviesList, deleteMovie }) => {
   const [likedMovies, setLikedMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [unsuccessfulSearch, setUnsuccessfulSearch] = useState("");
+  const [searchError, setSearchError] = useState("");
 
   useEffect(() => {
     setLikedMovies(savedMoviesList);
@@ -17,25 +19,45 @@ export const SavedMovies = ({ isLoggedIn, savedMoviesList, deleteMovie }) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
-  const filterSavedMovies = (inputValue, checkbox) => {
-    if (checkbox) {
-      const movies = savedMoviesList.filter((movie) => {
-        return (
-          (movie.nameRU.toLowerCase().includes(inputValue) ||
-            movie.nameEN.toLowerCase().includes(inputValue)) &&
-          movie.duration <= 40
-        );
-      });
-      setFilteredMovies(movies);
-    } else {
-      const movies = savedMoviesList.filter((movie) => {
-        return (
-          movie.nameRU.toLowerCase().includes(inputValue) ||
-          movie.nameEN.toLowerCase().includes(inputValue)
-        );
-      });
-      setFilteredMovies(movies);
+  const filterSavedMovies = async (inputValue, checkbox) => {
+    setLoading(true);
+    await timeout(1500);
+
+    try {
+      if (checkbox) {
+        const movies = await savedMoviesList.filter((movie) => {
+          return (
+            (movie.nameRU.toLowerCase().includes(inputValue) ||
+              movie.nameEN.toLowerCase().includes(inputValue)) &&
+            movie.duration <= 40
+          );
+        });
+
+        if (movies.length === 0) {
+          setUnsuccessfulSearch("Ничего не найдено");
+        } else {
+          setUnsuccessfulSearch("");
+        }
+
+        setLikedMovies(movies);
+      } else {
+        const movies = await savedMoviesList.filter((movie) => {
+          return (
+            movie.nameRU.toLowerCase().includes(inputValue) ||
+            movie.nameEN.toLowerCase().includes(inputValue)
+          );
+        });
+
+        setLikedMovies(movies);
+      }
+    } catch (err) {
+      console.log(err);
+      setSearchError(
+        "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+      );
     }
+
+    setLoading(false);
   };
 
   return (
@@ -46,7 +68,9 @@ export const SavedMovies = ({ isLoggedIn, savedMoviesList, deleteMovie }) => {
         <MoviesCardList
           movies={likedMovies}
           deleteMovie={deleteMovie}
-          filteredMovies={filteredMovies}
+          loading={loading}
+          unsuccessfulSearch={unsuccessfulSearch}
+          searchError={searchError}
         />
       </Main>
       <Footer />

@@ -19,7 +19,8 @@ export const SearchForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSavedMoviesPage) {
-      filterSavedMovies(inputText, checkboxShortMovies);
+      console.log("saved page");
+      filterSavedMovies(inputText.toLowerCase(), checkboxShortMovies);
     } else {
       handleSearchMovies(inputSearchForm, checkboxValue);
     }
@@ -37,6 +38,7 @@ export const SearchForm = ({
   // переключатель состояния checkbox
   const handleCheckbox = (e) => {
     if (isSavedMoviesPage) {
+      filterSavedMovies(inputText, e.target.checked);
       setCheckboxShortMovies(e.target.checked);
     } else {
       setCheckboxValue(e.target.checked);
@@ -45,16 +47,16 @@ export const SearchForm = ({
   };
 
   return (
-    <div className='search'>
-      <div className='container container_movies-mobile'>
-        <div className='search__wrapper'>
-          <form className='search__form' action='#' onSubmit={handleSubmit}>
-            <div className='search__inner'>
+    <div className="search">
+      <div className="container container_movies-mobile">
+        <div className="search__wrapper">
+          <form className="search__form" action="#" onSubmit={handleSubmit}>
+            <div className="search__inner">
               <input
-                className='search__input'
-                type='text'
-                name='search'
-                placeholder='Поиск'
+                className="search__input"
+                type="text"
+                name="search"
+                placeholder="Поиск"
                 minLength={2}
                 maxLength={90}
                 value={inputSearchForm}
@@ -62,11 +64,11 @@ export const SearchForm = ({
                 required
               />
               <button
-                className='search__button hover-link'
-                aria-label='Поиск фильма'
-                type='submit'
+                className="search__button hover-link"
+                aria-label="Поиск фильма"
+                type="submit"
               >
-                <img className='search__arrow' src={arrow} alt='Стрелка' />
+                <img className="search__arrow" src={arrow} alt="Стрелка" />
               </button>
               <SwitchToggle
                 name={"Короткометражки"}
@@ -81,8 +83,8 @@ export const SearchForm = ({
               checkboxValue={checkboxValue}
             />
 
-            {!inputSearchForm && (
-              <p className='search__error'>Нужно ввести ключевое слово</p>
+            {!inputSearchForm && !inputText && (
+              <p className="search__error">Нужно ввести ключевое слово</p>
             )}
           </form>
         </div>
