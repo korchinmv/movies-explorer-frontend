@@ -81,7 +81,21 @@ const App = () => {
   const registerUser = (name, password, email) => {
     Auth.registerUser(name, password, email)
       .then((res) => {
-        navigate("/signin");
+        Auth.authorizeUser(password, email)
+          .then((res) => {
+            localStorage.setItem("jwt", res.token);
+            setIsLoggedIn(true);
+            setTokenExist(true);
+            navigate("/movies");
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err) {
+              setErrorMessage(
+                "Произошла ошибка авторизации, попрбуйте еще раз..."
+              );
+            }
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -165,6 +179,9 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 tokenExist={tokenExist}
                 profileChanged={profileChanged}
+                setProfileChanged={setProfileChanged}
+                errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
               />
             }
           />

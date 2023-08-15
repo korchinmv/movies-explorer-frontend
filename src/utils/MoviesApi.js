@@ -1,4 +1,4 @@
-const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
+import { MOVIES_URL } from "./variables";
 
 class MoviesApi {
   constructor(URL) {

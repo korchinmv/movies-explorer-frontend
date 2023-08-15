@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
@@ -6,7 +6,9 @@ export const ProfileForm = ({
   logOut,
   updateUser,
   errorMessage,
+  setErrorMessage,
   profileChanged,
+  setProfileChanged,
 }) => {
   const currentUser = useContext(CurrentUserContext);
   const [nameDisabled, setNameDisabled] = useState(true);
@@ -14,11 +16,21 @@ export const ProfileForm = ({
   const [buttonSubmitForm, setButtonSubmitForm] = useState(false);
   const [buttonEditForm, setButtonEditForm] = useState(true);
   const [buttonLogout, setbuttonLogout] = useState(true);
+  const [isChangedValues, setIsChangedValues] = useState(false);
 
   const { form, handleChange, errors, isValid } = useForm({
     name: currentUser.name,
     email: currentUser.email,
   });
+
+  //проверка изменения данных в форме с данными текущего пользователя
+  useEffect(() => {
+    if (currentUser.name === form.name && currentUser.email === form.email) {
+      setIsChangedValues(true);
+    } else {
+      setIsChangedValues(false);
+    }
+  }, [form, currentUser.name, currentUser.email]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,65 +43,67 @@ export const ProfileForm = ({
     setEmailDisabled(false);
     setButtonEditForm(false);
     setbuttonLogout(false);
+    setErrorMessage("");
+    setProfileChanged("");
   };
 
   return (
-    <section className="profile">
-      <h1 className="profile__greeting">{`Привет, ${currentUser.name}!`}</h1>
+    <section className='profile'>
+      <h1 className='profile__greeting'>{`Привет, ${currentUser.name}!`}</h1>
 
-      <form className="profile__form" action="#" onSubmit={handleSubmit}>
-        <label className="profile__label" htmlFor="input-name">
+      <form className='profile__form' action='#' onSubmit={handleSubmit}>
+        <label className='profile__label' htmlFor='input-name'>
           Имя
           <input
-            className="profile__input"
-            type="text"
-            name="name"
-            id="input-name"
-            placeholder="Имя"
-            minLength="2"
-            maxLength="20"
+            className='profile__input'
+            type='text'
+            name='name'
+            id='input-name'
+            placeholder='Имя'
+            minLength='2'
+            maxLength='20'
             disabled={nameDisabled}
             value={form.name || ""}
             onChange={handleChange}
           />
           {errors.name && (
-            <span className="profile__input-error input-error">
+            <span className='profile__input-error input-error'>
               {errors.name}
             </span>
           )}
         </label>
 
-        <label className="profile__label" htmlFor="input-email">
+        <label className='profile__label' htmlFor='input-email'>
           E-mail
           <input
-            className="profile__input"
-            type="email"
-            name="email"
-            id="input-email"
-            placeholder="Почта"
+            className='profile__input'
+            type='email'
+            name='email'
+            id='input-email'
+            placeholder='Почта'
             value={form.email || ""}
-            minLength="5"
-            maxLength="30"
+            minLength='5'
+            maxLength='30'
             disabled={emailDisabled}
             onChange={handleChange}
-            pattern="([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+"
+            pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           />
           {errors.email && (
-            <span className="profile__input-error input-error ">
+            <span className='profile__input-error input-error '>
               {errors.email}
             </span>
           )}
         </label>
 
         {profileChanged && (
-          <div className="profile__message">Данные успешно изменены!</div>
+          <div className='profile__message'>Данные успешно изменены!</div>
         )}
 
         <button
           className={`profile__edit ${
             !buttonEditForm ? "profile__edit_hidden" : ""
           } hover-link`}
-          type="button"
+          type='button'
           onClick={handleEdit}
         >
           {" "}
@@ -97,17 +111,17 @@ export const ProfileForm = ({
         </button>
 
         {errorMessage !== "" ? (
-          <p className="profile__error">{errorMessage}</p>
+          <p className='profile__error'>{errorMessage}</p>
         ) : (
           ""
         )}
 
         <button
           className={`profile__submit ${
-            !isValid ? "profile__submit_disabled" : ""
+            !isValid || isChangedValues ? "profile__submit_disabled" : ""
           } ${!buttonSubmitForm ? "profile__submit_hidden" : ""} hover-link`}
           disabled={!isValid}
-          type="submit"
+          type='submit'
         >
           Сохранить
         </button>

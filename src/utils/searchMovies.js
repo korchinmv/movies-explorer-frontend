@@ -1,3 +1,5 @@
+import { SHORT_MOVIE } from "../utils/variables";
+
 const searchMovies = (moviesList, inputValue, checkbox) => {
   if (inputValue === undefined) {
     return (inputValue = "");
@@ -8,7 +10,7 @@ const searchMovies = (moviesList, inputValue, checkbox) => {
     if (checkbox) {
       return (
         movie.description.toLowerCase().includes(inputValue) &
-        (movie.duration < 40)
+        (movie.duration < SHORT_MOVIE)
       );
     } else {
       return movie.description.toLowerCase().includes(inputValue);

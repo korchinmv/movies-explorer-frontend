@@ -1,11 +1,10 @@
-const URL = "https://api.korchinmovies.nomoreparties.sbs/";
-const MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";
-const MOVIES_IMAGE_URL = "https://api.nomoreparties.co";
+import { BASE_URL, MOVIES_URL, MOVIES_IMAGE_URL } from "./variables";
 
 class Api {
-  constructor(URL, MOVIES_URL) {
-    this._URL = URL;
+  constructor(BASE_URL, MOVIES_URL, MOVIES_IMAGE_URL) {
+    this._URL = BASE_URL;
     this._MOVIES_URL = MOVIES_URL;
+    this._MOVIES_IMAGE_URL = MOVIES_IMAGE_URL;
   }
 
   _getToken() {
@@ -34,7 +33,7 @@ class Api {
   }
 
   sendUser(data) {
-    const promise = fetch(`${this._URL}users/me`, {
+    const promise = fetch(`${this._URL}/users/me`, {
       method: "PATCH",
       headers: this._getHeaders(),
       body: JSON.stringify({
@@ -46,7 +45,7 @@ class Api {
   }
 
   getSavedMovies() {
-    const promise = fetch(`${this._URL}movies`, {
+    const promise = fetch(`${this._URL}/movies`, {
       headers: this._getHeaders(),
     });
     return promise.then(this._getJson);
@@ -62,11 +61,11 @@ class Api {
         duration: data.duration,
         year: data.year,
         description: data.description,
-        image: `${MOVIES_IMAGE_URL}${data.image.url}`,
+        image: `${this._MOVIES_IMAGE_URL}${data.image.url}`,
         trailerLink: data.trailerLink,
         nameEN: data.nameEN,
         nameRU: data.nameRU,
-        thumbnail: `${MOVIES_URL}data.image.formats.thumbnail.url`,
+        thumbnail: `${this._MOVIES_URL}data.image.formats.thumbnail.url`,
         movieId: data.id,
         owner: email,
       }),
@@ -83,5 +82,5 @@ class Api {
   }
 }
 
-const MainApi = new Api(URL, MOVIES_URL);
+const MainApi = new Api(BASE_URL, MOVIES_URL, MOVIES_IMAGE_URL);
 export default MainApi;

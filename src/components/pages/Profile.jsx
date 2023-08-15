@@ -9,6 +9,9 @@ export const Profile = ({
   updateUser,
   isLoading,
   profileChanged,
+  setProfileChanged,
+  errorMessage,
+  setErrorMessage,
 }) => {
   return isLoading ? (
     <Preloader />
@@ -20,6 +23,9 @@ export const Profile = ({
           logOut={logOut}
           updateUser={updateUser}
           profileChanged={profileChanged}
+          setProfileChanged={setProfileChanged}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
         />
       </Main>
     </>

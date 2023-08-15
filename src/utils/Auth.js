@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.korchinmovies.nomoreparties.sbs";
+import { BASE_URL } from "../utils/variables";
 
 const makeRequest = (url, method, body, token) => {
   const headers = { "Content-Type": "application/json" };

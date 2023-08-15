@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import { MoviesCard } from "../MoviesCard/MoviesCard";
 import { Preloader } from "../Preloader/Preloader";
 import { MoreButton } from "../UI/MoreButton/MoreButton";
+import {
+  MOVIES_LIST_1280,
+  MOVIES_LIST_480,
+  SHOW_MORE_768,
+  SHOW_MORE_480,
+} from "../../utils/variables";
 
 export const MoviesCardList = ({
   movies,
@@ -19,17 +25,17 @@ export const MoviesCardList = ({
 
   const showCount = () => {
     if (displayWidth > 768) {
-      setShowMovies(12);
+      setShowMovies(MOVIES_LIST_1280);
     } else if (displayWidth < 480) {
-      setShowMovies(5);
+      setShowMovies(MOVIES_LIST_480);
     }
   };
 
   const showMore = () => {
     if (displayWidth >= 768) {
-      setShowMovies(showMovies + 3);
+      setShowMovies(showMovies + SHOW_MORE_768);
     } else if (displayWidth < 480) {
-      setShowMovies(showMovies + 2);
+      setShowMovies(showMovies + SHOW_MORE_480);
     }
   };
 
@@ -48,16 +54,16 @@ export const MoviesCardList = ({
   });
 
   return (
-    <section className="movies-cards">
-      <div className="container">
+    <section className='movies-cards'>
+      <div className='container'>
         {isMoviesPage && loading ? (
           <Preloader />
         ) : unsuccessfulSearch !== "" && movies.length === 0 ? (
-          <p className="movies-cards__message">{unsuccessfulSearch}</p>
+          <p className='movies-cards__message'>{unsuccessfulSearch}</p>
         ) : searchError !== "" ? (
-          <p className="movies-cards__message">{searchError}</p>
+          <p className='movies-cards__message'>{searchError}</p>
         ) : isMoviesPage && movies.length !== 0 ? (
-          <ul className="movies-cards__list">
+          <ul className='movies-cards__list'>
             {movies.map((movie, index) => {
               if (index < showMovies) {
                 return (
@@ -79,7 +85,7 @@ export const MoviesCardList = ({
         {isSavedMoviesPage && loading ? (
           <Preloader />
         ) : isSavedMoviesPage && movies.length !== 0 ? (
-          <ul className="movies-cards__list">
+          <ul className='movies-cards__list'>
             {movies.reverse().map((movie) => {
               return (
                 <MoviesCard
