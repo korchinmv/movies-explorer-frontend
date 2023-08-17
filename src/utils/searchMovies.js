@@ -4,16 +4,20 @@ const searchMovies = (moviesList, inputValue, checkbox) => {
   if (inputValue === undefined) {
     return (inputValue = "");
   }
-  inputValue = inputValue.toLowerCase();
+  inputValue = inputValue.toLowerCase().trim();
 
   const foundMovies = moviesList.filter((movie) => {
     if (checkbox) {
       return (
-        movie.description.toLowerCase().includes(inputValue) &
+        (movie.nameRU.toLowerCase().includes(inputValue) ||
+          movie.description.toLowerCase().includes(inputValue)) &
         (movie.duration < SHORT_MOVIE)
       );
     } else {
-      return movie.description.toLowerCase().includes(inputValue);
+      return (
+        movie.nameRU.toLowerCase().includes(inputValue) ||
+        movie.description.toLowerCase().includes(inputValue)
+      );
     }
   });
 
