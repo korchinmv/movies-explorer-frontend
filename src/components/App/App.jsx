@@ -91,16 +91,14 @@ const App = () => {
           .catch((err) => {
             console.log(err);
             if (err) {
-              setErrorMessage(
-                "Произошла ошибка авторизации, попрбуйте еще раз..."
-              );
+              setErrorMessage(err);
             }
           });
       })
       .catch((err) => {
         console.log(err);
         if (err) {
-          setErrorMessage("Произошла ошибка, попрбуйте еще раз...");
+          setErrorMessage(err);
         }
       });
   };
@@ -117,7 +115,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
         if (err) {
-          setErrorMessage("Произошла ошибка авторизации, попрбуйте еще раз...");
+          setErrorMessage(err);
         }
       });
   };
@@ -144,7 +142,7 @@ const App = () => {
       .catch((err) => {
         console.log(err);
         if (err) {
-          setErrorMessage("При обновлении профиля произошла ошибка.");
+          setErrorMessage(err);
         }
       })
       .finally(() => {

@@ -8,9 +8,14 @@ const makeRequest = (url, method, body, token) => {
   if (body !== undefined) config.body = JSON.stringify(body);
 
   return fetch(`${BASE_URL}${url}`, config).then((res) => {
-    return res.ok
-      ? res.json()
-      : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`);
+    if (res.ok) {
+      return res.json();
+    }
+    console.log(`Ошибка: код ${res.status}`);
+    return res.text().then((text) => {
+      let errorText = JSON.parse(text);
+      return Promise.reject(errorText.message);
+    });
   });
 };
 

@@ -24,7 +24,11 @@ class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Ошибка: ${res.status} что то идет не по плану`);
+      console.log(`Ошибка: код ${res.status}`);
+      return res.text().then((text) => {
+        let errorText = JSON.parse(text);
+        return Promise.reject(errorText.message);
+      });
     }
   }
 
