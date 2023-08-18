@@ -56,7 +56,7 @@ class Api {
   }
 
   sendMovies(data, email) {
-    const promise = fetch(`${this._URL}movies`, {
+    const promise = fetch(`${this._URL}/movies`, {
       method: "POST",
       headers: this._getHeaders(),
       body: JSON.stringify({
@@ -78,7 +78,7 @@ class Api {
   }
 
   deleteMovies(id) {
-    const promise = fetch(`${this._URL}movies/${id}`, {
+    const promise = fetch(`${this._URL}/movies/${id}`, {
       method: "DELETE",
       headers: this._getHeaders(),
     });
