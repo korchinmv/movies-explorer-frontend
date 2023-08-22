@@ -1,20 +1,76 @@
-import React from "react";
+import { useContext, useState, useEffect } from "react";
+import { useForm } from "../../hooks/useForm";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export const ProfileForm = () => {
+export const ProfileForm = ({
+  logOut,
+  updateUser,
+  errorMessage,
+  setErrorMessage,
+  profileChanged,
+  setProfileChanged,
+}) => {
+  const currentUser = useContext(CurrentUserContext);
+  const [nameDisabled, setNameDisabled] = useState(true);
+  const [emailDisabled, setEmailDisabled] = useState(true);
+  const [buttonSubmitForm, setButtonSubmitForm] = useState(false);
+  const [buttonEditForm, setButtonEditForm] = useState(true);
+  const [buttonLogout, setbuttonLogout] = useState(true);
+  const [isChangedValues, setIsChangedValues] = useState(false);
+
+  const { form, handleChange, errors, isValid } = useForm({
+    name: currentUser.name,
+    email: currentUser.email,
+  });
+
+  //проверка изменения данных в форме с данными текущего пользователя
+  useEffect(() => {
+    if (currentUser.name === form.name && currentUser.email === form.email) {
+      setIsChangedValues(true);
+    } else {
+      setIsChangedValues(false);
+    }
+  }, [form, currentUser.name, currentUser.email]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateUser(form);
+  };
+
+  const handleEdit = () => {
+    setButtonSubmitForm(true);
+    setNameDisabled(false);
+    setEmailDisabled(false);
+    setButtonEditForm(false);
+    setbuttonLogout(false);
+    setErrorMessage("");
+    setProfileChanged("");
+  };
+
   return (
     <section className='profile'>
-      <h1 className='profile__greeting'>Привет, Виталий!</h1>
+      <h1 className='profile__greeting'>{`Привет, ${currentUser.name}!`}</h1>
 
-      <form className='profile__form' action='#'>
+      <form className='profile__form' action='#' onSubmit={handleSubmit}>
         <label className='profile__label' htmlFor='input-name'>
           Имя
           <input
             className='profile__input'
             type='text'
-            name='input-name'
+            name='name'
             id='input-name'
-            placeholder='Виталий'
+            placeholder='Имя'
+            minLength='2'
+            maxLength='20'
+            disabled={nameDisabled}
+            value={form.name || ""}
+            onChange={handleChange}
           />
+          {errors.name && (
+            <span className='profile__input-error input-error'>
+              {errors.name}
+            </span>
+          )}
         </label>
 
         <label className='profile__label' htmlFor='input-email'>
@@ -22,18 +78,63 @@ export const ProfileForm = () => {
           <input
             className='profile__input'
             type='email'
-            name='input-email'
+            name='email'
             id='input-email'
-            placeholder='pochta@yandex.ru'
+            placeholder='Почта'
+            value={form.email || ""}
+            minLength='5'
+            maxLength='30'
+            disabled={emailDisabled}
+            onChange={handleChange}
+            pattern='([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*@([A-zА-я])+([0-9\-_\+\.])*([A-zА-я0-9\-_\+\.])*[\.]([A-zА-я])+'
           />
+          {errors.email && (
+            <span className='profile__input-error input-error '>
+              {errors.email}
+            </span>
+          )}
         </label>
 
-        <button className='profile__edit hover-link' type='submit'>
+        {profileChanged && (
+          <div className='profile__message'>Данные успешно изменены!</div>
+        )}
+
+        <button
+          className={`profile__edit ${
+            !buttonEditForm ? "profile__edit_hidden" : ""
+          } hover-link`}
+          type='button'
+          onClick={handleEdit}
+        >
+          {" "}
           Редактировать
+        </button>
+
+        {errorMessage !== "" ? (
+          <p className='profile__error'>{errorMessage}</p>
+        ) : (
+          ""
+        )}
+
+        <button
+          className={`profile__submit ${
+            !isValid || isChangedValues ? "profile__submit_disabled" : ""
+          } ${!buttonSubmitForm ? "profile__submit_hidden" : ""} hover-link`}
+          disabled={!isValid}
+          type='submit'
+        >
+          Сохранить
         </button>
       </form>
 
-      <button className='profile__logout hover-link'>Выйти из аккаунта</button>
+      <button
+        className={`profile__logout ${
+          !buttonLogout ? "profile__logout_hidden" : ""
+        } hover-link `}
+        onClick={logOut}
+      >
+        Выйти из аккаунта
+      </button>
     </section>
   );
 };
